@@ -1,254 +1,117 @@
 body{
 	background-color:#fff7ac;
 }
-/* FROM INDEX PAGE */	
-#langMen {
+.cabeceraAdmin {
+	width: 100%;
+	height: 50px;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background-color: #fff7ac;
+	border-bottom: 1px solid;
+	border-color: #000;
+	-webkit-box-shadow: 0px 6px 8px #ababab;
+	-moz-box-shadow: 0px 6px 8px #ababab;
+	z-index: 99;
+	min-width: 850px;
+}
+.cabecConj{
 	position:relative;
-	width:80%;
-	top:30%;
-	left:10%;
-}
-#cat {
-	position:absolute;
 	left:0px;
+	width:700px;
+	
 }
-#eng {
-	position:absolute;
-	right:0px;
+.cabeceraMain {
+	width: 100%;
+	height: 100px;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background-color: #fff7ac;
+	border-bottom: 1px solid;
+	border-color: #000;
+	-webkit-box-shadow: 0px 6px 8px #ababab;
+	-moz-box-shadow: 0px 6px 8px #ababab;
+	z-index: 99;
+	min-width: 850px;
 }
-#cast {
-	position:absolute;
+.cabecConjMain {
+	position:relative;
 	left:50%;
-	margin: 0px 0 0 -150px;
-}
-.bandera img{
-	border-radius: 25px;
-	height:200px;
-	width:300px;
-}
-/* Site Generic*/
-#cuerpo,#indice{
-	height:100%;
-	width:100%;
+	margin: 0 0 0 -350;
 }
 
-#cabecera,#cabecera2{
-    background-image:url('../img/logoLargo.png');
-    background-repeat:no-repeat;
-    background-size:contain;
-	background-position:30%;
-	position:relative;
-	height:10%;
-}
-#indice #cabecera{
-	height:30%;
-}
-.botones{
-	position:absolute;
-	right:0px;
-	width:20%;
-}
-.botonesInTd {
-	bottom:0px;
-
-	}
-
-.boton img{
-	width: 50px;
-	margin: 30px 30px ;
-}
-
-/** Especifico de las ifchas de plato */
-#producto {
-	position:relative;
-
-}
-.botones2{
-	position:absolute;
-	right:0px;
-	width:20%;
-}
-
-
-.boton2 img{
-	width: 50px;
-	margin: 30px 30px ;
-}
-.imagen{
-    border-radius: 30px;
-    position:absolute;
-	width:80%;
-	left:0;
+.cabecImgMain{
+	position: absolute;
+	min-width:300px;
+	height:100px;
+	left: 0px;
+	background-image: url("../img/logoLargo.png");
+	background-size:contain;
+	background-repeat: no-repeat;
+	background-position:left;
 	
 }
-.imagen img{
-    border-radius: 30px;
-    height: 90%;
-    padding:0px 100px;
+.cabecera {
+	position: absolute;
+	min-width:200px;
+	height:50px;
+	left: 0px;
+	background-image: url("../img/logoLargo.png");
+	background-size:contain;
+	background-repeat: no-repeat;
+	background-position:left;
 }
-
-#cuerpo,#indice{
-	height:100%;
-	width:100%;
-}
-
-#cabecera,#cabecera2{
-    background-image:url('../img/logoLargo.png');
-    background-repeat:no-repeat;
-    background-size:contain;
-	background-position:30%;
-	position:relative;
-	height:10%;
-}
-#producto2 {
-	position:relative;
-	width:100%;
-	height:90%;
-}
-.imagen2{
-    border-radius: 30px;
-    position:absolute;
-    width: 70%;
-    height: 100%;
-/*     top:0px; */
-/* 	left:0px;	 */
-}
-
-.botones2{
-	position:absolute;
+.cabTitle{
+	position: absolute;
 	right:0px;
-	width:20%;
+	margin: 0px 0 0 -150px;	
+	font-size: x-large;
+	text-shadow: -1px 1px 0px #DEDEDE;
+	color: #000;	
 }
-
-
-.boton2 img{
-	width: 50px;
-	margin: 30px 30px ;
-}
-
-#imgProd {	
-	top:0px;
-	margin:0px;
-    transform:rotate(-90deg);
-    border-radius: 30px;
-    max-width: 80%;    
-    padding:0px 100px;
-}
-
-/* Para Opciones */
-#cuerpo #cabecera2 {
-	height:20%;
-}
-#opciones {
-	position:relative;
-}
-
-#menu{
-	position:absolute;
-	width:70%;
-	height:65%;
-	left:10%;	
-}
-#menu table {
-    padding:50px 100px;
-}
-#menu td {
-	height:100px;
-	width:370px;
-	background-color: #873223;
-	border:3px;
-	border-style:ridge;
-	font-size: 30px;
-    cursor: pointer;
-	outline: none;
-	border-radius: 15px;
-	text-decoration: none;
-	color: #fff;
-}
-
-#menu td:hover {background-color: #ffa54a} 
-.opcMenu{
-  	text-align: center;
-	width:370px;
-	height:100px;	
-}
-.inText{
-	position:relative;
+.cabTitleMain {
 	top:25px;
-} 
+}
+.logout{
+	position: absolute;
+	right: 0px;
+	cursor: pointer;
+	padding: 10px;
+}
 
-#platosList {
+
+/*Login*/
+
+.mainContainer {
+	top:200px;
 	position:relative;
-
+	margin: 0px auto;
+	width: 820px;
 }
 
-#platos {
-    position:absolute;
-	width:80%;
-	left:50%;	
-	margin: 0px 0 0 -350px;
-	
-}
-#platos th{	
-	text-align: justify;
-	padding: 0px 10px;
-	width:350px;
-	}
-.platoimg {
-	max-height:100%; 
-	max-width:100%;
-}
-
-.platotd {
-	margin:5px;
-	padding:5px;
-	height:270px;
-	width:370px;
+.loginContainer {
+/* 	background-image: url('../img/reflejoMin.png'); */
+/* 	background-repeat: repeat-x; */
+	position: relative;
+	top: 50px;
+	width: 300px;
+	background-color: #f3d772;
+	border: 1px solid;
+	border-color: #000;
+	text-shadow: -1px 1px 0px #FFF;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	padding: 10px;
+	z-index: 1;
+	box-shadow: 6px 6px 8px #ababab;
+	-webkit-box-shadow: 6px 6px 8px #ababab;
+	-moz-box-shadow: 6px 6px 8px #ababab;
+	margin: 0px auto;
 }
 
-#plusSign {
-	height:100px;
+.loginContainer table {
+	border: 0px;
+	width: 100%;
 }
-
-
-#pag2 {
-	background-color:blue;
-	position:relative;
-	max-width:100%;
-}
-#botonPag2{
-	position:absolute;
-}
-#botonPag2 img{
-	width: 50px;
-	margin: 30px 30px ;
-}
-#botonesHor{
-	position:relative;
-}
-.botonHor img{
-	width: 50px;
-	margin: 30px 30px ;
-}
-#botonHorDer {
-	position:absolute;
-	right:0px;
-}
-#botonHorIzq {
-	position:absolute;
-	left:0px;
-	
-}
-
-#platos3 {
-    position:absolute;
-	width:80%;
-	left:10%;	
-	margin: 0px 0 0 -150px;
-	
-}
-#platos3 th{	
-	text-align: justify;
-	padding: 0px 10px;
-	width:300px;
-	}
