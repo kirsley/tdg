@@ -1,0 +1,254 @@
+body{
+	background-color:#fff7ac;
+}
+/* FROM INDEX PAGE */	
+#langMen {
+	position:relative;
+	width:80%;
+	top:30%;
+	left:10%;
+}
+#cat {
+	position:absolute;
+	left:0px;
+}
+#eng {
+	position:absolute;
+	right:0px;
+}
+#cast {
+	position:absolute;
+	left:50%;
+	margin: 0px 0 0 -150px;
+}
+.bandera img{
+	border-radius: 25px;
+	height:200px;
+	width:300px;
+}
+/* Site Generic*/
+#cuerpo,#indice{
+	height:100%;
+	width:100%;
+}
+
+#cabecera,#cabecera2{
+    background-image:url('../img/logoLargo.png');
+    background-repeat:no-repeat;
+    background-size:contain;
+	background-position:30%;
+	position:relative;
+	height:10%;
+}
+#indice #cabecera{
+	height:30%;
+}
+.botones{
+	position:absolute;
+	right:0px;
+	width:20%;
+}
+.botonesInTd {
+	bottom:0px;
+
+	}
+
+.boton img{
+	width: 50px;
+	margin: 30px 30px ;
+}
+
+/** Especifico de las ifchas de plato */
+#producto {
+	position:relative;
+
+}
+.botones2{
+	position:absolute;
+	right:0px;
+	width:20%;
+}
+
+
+.boton2 img{
+	width: 50px;
+	margin: 30px 30px ;
+}
+.imagen{
+    border-radius: 30px;
+    position:absolute;
+	width:80%;
+	left:0;
+	
+}
+.imagen img{
+    border-radius: 30px;
+    height: 90%;
+    padding:0px 100px;
+}
+
+#cuerpo,#indice{
+	height:100%;
+	width:100%;
+}
+
+#cabecera,#cabecera2{
+    background-image:url('../img/logoLargo.png');
+    background-repeat:no-repeat;
+    background-size:contain;
+	background-position:30%;
+	position:relative;
+	height:10%;
+}
+#producto2 {
+	position:relative;
+	width:100%;
+	height:90%;
+}
+.imagen2{
+    border-radius: 30px;
+    position:absolute;
+    width: 70%;
+    height: 100%;
+/*     top:0px; */
+/* 	left:0px;	 */
+}
+
+.botones2{
+	position:absolute;
+	right:0px;
+	width:20%;
+}
+
+
+.boton2 img{
+	width: 50px;
+	margin: 30px 30px ;
+}
+
+#imgProd {	
+	top:0px;
+	margin:0px;
+    transform:rotate(-90deg);
+    border-radius: 30px;
+    max-width: 80%;    
+    padding:0px 100px;
+}
+
+/* Para Opciones */
+#cuerpo #cabecera2 {
+	height:20%;
+}
+#opciones {
+	position:relative;
+}
+
+#menu{
+	position:absolute;
+	width:70%;
+	height:65%;
+	left:10%;	
+}
+#menu table {
+    padding:50px 100px;
+}
+#menu td {
+	height:100px;
+	width:370px;
+	background-color: #873223;
+	border:3px;
+	border-style:ridge;
+	font-size: 30px;
+    cursor: pointer;
+	outline: none;
+	border-radius: 15px;
+	text-decoration: none;
+	color: #fff;
+}
+
+#menu td:hover {background-color: #ffa54a} 
+.opcMenu{
+  	text-align: center;
+	width:370px;
+	height:100px;	
+}
+.inText{
+	position:relative;
+	top:25px;
+} 
+
+#platosList {
+	position:relative;
+
+}
+
+#platos {
+    position:absolute;
+	width:80%;
+	left:50%;	
+	margin: 0px 0 0 -350px;
+	
+}
+#platos th{	
+	text-align: justify;
+	padding: 0px 10px;
+	width:350px;
+	}
+.platoimg {
+	max-height:100%; 
+	max-width:100%;
+}
+
+.platotd {
+	margin:5px;
+	padding:5px;
+	height:270px;
+	width:370px;
+}
+
+#plusSign {
+	height:100px;
+}
+
+
+#pag2 {
+	background-color:blue;
+	position:relative;
+	max-width:100%;
+}
+#botonPag2{
+	position:absolute;
+}
+#botonPag2 img{
+	width: 50px;
+	margin: 30px 30px ;
+}
+#botonesHor{
+	position:relative;
+}
+.botonHor img{
+	width: 50px;
+	margin: 30px 30px ;
+}
+#botonHorDer {
+	position:absolute;
+	right:0px;
+}
+#botonHorIzq {
+	position:absolute;
+	left:0px;
+	
+}
+
+#platos3 {
+    position:absolute;
+	width:80%;
+	left:10%;	
+	margin: 0px 0 0 -150px;
+	
+}
+#platos3 th{	
+	text-align: justify;
+	padding: 0px 10px;
+	width:300px;
+	}
