@@ -115,3 +115,7 @@ body{
 	border: 0px;
 	width: 100%;
 }
+
+.loginContainer input {
+	max-width:150px;
+}
