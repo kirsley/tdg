@@ -37,8 +37,7 @@ body{
 }
 .cabecConjMain {
 	position:relative;
-	left:50%;
-	margin: 0 0 0 -350;
+	margin: 0px auto;
 }
 
 .cabecImgMain{
@@ -118,4 +117,32 @@ body{
 
 .loginContainer input {
 	max-width:150px;
+}
+
+
+/********  ADMIN *********/
+
+.menuContainer{
+	position:relative;
+	top: 100px;
+	margin: 0px auto;
+	width: 820px;
+}
+.opcMen {
+	min-width:820px;
+	max-width:900px;
+}
+.opcMen table{
+	width:820px;
+	text-align:center;
+}
+.opcs {
+	padding:5px;
+	min-width:200px;
+	margin:0px 15px;
+	border-bottom: 1px solid;
+	border-color: #000;
+	-webkit-box-shadow: 0px 6px 8px #ababab;
+	-moz-box-shadow: 0px 6px 8px #ababab;
+	background-color:#f3d772;
 }

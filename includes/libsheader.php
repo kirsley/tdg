@@ -1,6 +1,6 @@
 <?php
 
-   $path = $_GLOBAL['URL'];
+   $path = $GLOBALS['URL'];
 // echo "<script type='text/javascript' src='js/main.js'></script>"; 
 echo "<script type='text/javascript' src='$path/js/jquery.js'></script>";
 echo "<script type='text/javascript' src='$path/js/jquerymd5.js'></script>";
