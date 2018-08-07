@@ -6,19 +6,6 @@
  * @return $link enlace de conexion con base de datos
  */
 
-    function conectar($db){
-        
-        $ip=$GLOBALS['MYSQL_IP'];
-        $user=$GLOBALS['MYSQL_USER'];
-        $pass=$GLOBALS['MYSQL_PASSWORD'];
-        $link=mysqli_connect($ip,$user,$pass,$db);
-        if (mysqli_connect_errno())  {
-            echo "Failed to connect to MySQL: " . mysqli_connect_error();
-            echo "Error al intentar conectar a mysql";
-        }
-        return $link;
-    }
-    
     function conectarpdo($db){
         $ip=$GLOBALS['MYSQL_IP'];
         $dsn = "mysql:host=".$ip.";dbname=".$db;
@@ -35,14 +22,6 @@
     function desconectarpdo($dbh){
         $dbh = null;
     }
-    /**
-     * Función para terminar correctamente la conexión con la base de datos
-     */
-    function desconectar($link){        
-        mysqli_close($link);
-    }
-  
-    
     
     /**
      * Funcion para buscar un usuario en la BD
