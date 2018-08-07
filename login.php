@@ -117,7 +117,7 @@ if ($login == "true"){
 							<td><input id='passwordForm' type='password' name='pass' /> </td>
 						</tr>
 						<tr>
-							<td colspan="2"><input class="botonForm" type='button' value='valida' onclick="validarLogin()" /></td>
+							<td colspan="2"><input class="botonForm" type='button' value='Acceder' onclick="validarLogin()" /></td>
 						</tr>
 					</table>
 				</form>
