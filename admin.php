@@ -9,18 +9,20 @@ $errors = '';
 if(isset($_POST['accio']) && ($_POST['accio']=='newCat')){
     $nomCateg=$_POST['nomCateg'];
     $contLang=$_POST['totalLang'];
-    $url = generateUrl( $nomCateg);
+    $url = strtolower(generateUrl( $nomCateg));
     echo $url . "<br />";
     $languages=[];
     //[accio] => newCat [nomCateg] => eeee [lang1] => car [lang2] => daa [lang3] => dde [totalLang] => 3 
     for ($cont=1;$cont<=$contLang;$cont++){
         if (isset($_POST["lang" . $cont]) && $_POST["lang" . $cont] != ""){
             echo "lang" . $cont .": " .$_POST["lang" . $cont ] . "<br />";
-            $languages[$cont] = $_POST["lang" . $cont ];
-        }
+            $languages[$cont] = htmlChars($_POST["lang" . $cont ]);
+        } else {
+            $languages[$cont] = htmlChars($nomCateg);
+	}
         echo $cont . "<br />";
     }
-    insertCategory($adminLink,$url,$nomCateg,$languages);
+    insertCategory($adminLink,$url,$languages);
     print_r(array_keys($languages));
     $langKeys=array_keys($languages);
     foreach ( $langKeys as $key){
@@ -44,7 +46,7 @@ function validaCategoria(){
 </script>
 </head>
 <body>
-<?php //include_once 'includes/adminHeader.php'?>
+<?php include_once 'includes/adminHeader.php'?>
 <div class="menuContainer">
 	<div class="opcMen">
 		<table>
@@ -74,7 +76,7 @@ function validaCategoria(){
                             echo "</tr>";
                             $cont++;
                 		}
-                		echo "<input type='hidden' name='totalLang'	value='".$cont."' />";
+                		echo "<input type='hidden' name='totalLang' value='".$cont."' />";
                 	?>
                 <tr><td></td><td><input class='boto' type='button' value='Agregar Categoria' onClick='validaCategoria()' /></td>
 			</table>
