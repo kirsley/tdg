@@ -86,6 +86,11 @@ function validaCategoria(){
 		</div>
 		<div class="listCat">
 			<h2> Listado de Categorias </h2>
+			<?php
+        echo "<br /><br />";
+ 
+				print_r(getCategoryListing2($adminLink));
+?>
 		</div>
 	</div>
 	

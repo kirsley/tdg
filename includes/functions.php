@@ -140,6 +140,38 @@
             }
         }
     }
+    function getCategoryListing($dbh){
+	$stmt=$dbh->prepare("select c.id as cid,c.url as url,GROUP_CONCAT(t.translation) as tanslations,GROUP_CONCAT(t.lang_id) as languages from category c,cat_trans t WHERE t.cat_id = c.id group by c.id ;");
+	$stmt->execute();
+	$categoryLists=[];
+	while ( $result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		$categoryLists[$result['cid']] = $result;
+	}
+	$stmt=null;
+	return $categoryLists;
+	}
+
+    function getCategoryListing2($dbh){
+	$tmpcategory_list=getCategories($dbh);
+	$stmt = $dbh->prepare("SELECT * from cat_trans WHERE cat_id = :cid order by cat_id,lang_id");
+	$stmt->bindParam(":cid",$cid);
+        $categoryLists=[];
+	foreach ( $tmpcategory_list as $category ){
+		$cid=$category->id;
+		$stmt->execute();
+		$translations=[];
+		while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+		print_r($result);
+			$translations[$result['lang_id']]=$results['translation'];
+		echo "<br />";
+		echo "<br />";
+		}
+		$categoryLists[$category->id]=[$category->url,$translation];
+	}
+	return $categoryLists;
+}	
+
+
     function htmlChars($str){
 	$charEq = array('Á','á','À','Â','à','Â','â','Ä','ä','Ã','ã','Å','å','Æ','æ','Ç','ç','Ð','ð','É','é','È','è','Ê','ê','Ë','ë','Í','í','Ì','ì','Î','î','Ï','ï','Ñ','ñ','Ó','ó','Ò','ò','Ô','ô','Ö','ö','Õ','õ','Ø','ø','ß','Þ','þ','Ú','ú','Ù','ù','Û','û','Ü','ü','Ý','ý','ÿ');
         $htmlChars = array('&Aacute;','&aacute;','&Agrave;','&Acirc;','&agrave;','&Acirc;','&acirc;','&Auml;','&auml;','&Atilde;','&atilde;','&Aring;','&aring;','&Aelig;','&aelig;','&Ccedil;','&ccedil;','&Eth;','&eth;','&Eacute;','&eacute;','&Egrave;','&egrave;','&Ecirc;','&ecirc;','&Euml;','&euml;','&Iacute;','&iacute;','&Igrave;','&igrave;','&Icirc;','&icirc;','&Iuml;','&iuml;','&Ntilde;','&ntilde;','&Oacute;','&oacute;','&Ograve;','&ograve;','&Ocirc;','&ocirc;','&Ouml;','&ouml;','&Otilde;','&otilde;','&Oslash;','&oslash;','&szlig;','&Thorn;','&thorn;','&Uacute;','&uacute;','&Ugrave;','&ugrave;','&Ucirc;','&ucirc;','&Uuml;','&uuml;','&Yacute;','&yacute;','&yuml;');
