@@ -12,7 +12,7 @@
 
 $MYSQL_IP="localhost";
 $MYSQL_USER="kirsley";
-$MYSQL_PASSWORD="dc1belios";
-$MYSQL_BDNAME="tocdegralla";
+$MYSQL_PASSWORD="";
+$MYSQL_BDNAME="tdg";
 $URL="";
 ?>

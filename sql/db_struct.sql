@@ -9,6 +9,8 @@ CREATE TABLE language(
 	langShort varchar(50),
 	CONSTRAINT PKLang PRIMARY KEY(id)
 );
+
+INSERT INTO language(lang,langShort) VALUES ('Español','esp'),('Català','cat'),('English','eng');
 	
 -- Category
 -- 	ID (int)
@@ -28,9 +30,7 @@ CREATE TABLE cat_trans(
 	idElement INT PRIMARY KEY AUTO_INCREMENT,
 	cat_id INT,
 	lang_id INT,
-	translation VARCHAR(100),
-	CONSTRAINT FKcCat FOREIGN KEY(cat_id) REFERENCES category(id),
-	CONSTRAINT FKcLang FOREIGN KEY (lang_id) REFERENCES languages(id)
+	translation VARCHAR(100)
 );
 -- Product
 -- 	ID (int)
@@ -44,8 +44,7 @@ CREATE TABLE product (
 	url VARCHAR(150),
 	img_path VARCHAR(150),
 	cat_id INT,
-	CONSTRAINT PKProd PRIMARY KEY(id),
-	CONSTRAINT FKpCat FOREIGN KEY (cat_id) REFERENCES CATEGORY(ID)
+	CONSTRAINT PKProd PRIMARY KEY(id)
 );
 -- prodTrans
 -- 	prod_id Refers to Product.ID
@@ -56,7 +55,16 @@ CREATE TABLE prod_trans(
 	idElement INT PRIMARY KEY AUTO_INCREMENT,
 	prod_id INT,
 	lang_id INT,
-	translation VARCHAR(100),
-	CONSTRAINT FKtProd FOREIGN KEY(prod_id) REFERENCES product(id),
-	CONSTRAINT FKcLang FOREIGN KEY (lang_id) REFERENCES languages(id)
+	translation VARCHAR(100)
 );
+
+CREATE TABLE users (
+     id int NOT NULL AUTO_INCREMENT,
+     username VARCHAR(50),
+     user_pass VARCHAR(255),
+     isAdmin INT,
+     CONSTRAINT PKusers PRIMARY KEY(id)
+);
+
+insert into users (username,user_pass,isAdmin) values ('kirsley','85ec9aa83eaf2427a3f49a2b0d0b5b47',1);
+
