@@ -125,10 +125,9 @@ body{
 .menuContainer{
 	position:relative;
 	top: 100px;
-	margin: 0px auto;
-	width: 820px;
 }
 .opcMen {
+	margin: 0px auto;
 	min-width:820px;
 	max-width:900px;
 }
@@ -145,4 +144,40 @@ body{
 	-webkit-box-shadow: 0px 6px 8px #ababab;
 	-moz-box-shadow: 0px 6px 8px #ababab;
 	background-color:#f3d772;
+}
+
+.manage {
+	position:relative;
+	top:10px;
+        background-color:#f3d772;
+	margin:0px auto;
+	min-width:850px;
+        max-width:950px;
+	font-size:12px;
+
+}
+.addCat {
+	position:relative;
+	float:left;
+	padding:10px;
+        background-color:#f3cc72;
+	width:330px;
+}
+.addCat table{
+	margin:0px auto;
+        width:200px;
+        font-size:12px;
+}
+
+.addCat input{
+	max-width: 200px;
+}
+
+.listCat {
+	position:relative;
+	float:right;
+        background-color:#f4aa72;
+	width:500px;
+
+/*	right:0px;*/
 }

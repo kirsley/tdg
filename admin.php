@@ -57,6 +57,8 @@ function validaCategoria(){
 		</table>
 	</div>
 	<div class="manage" id="catMang">
+		<div class="addCat">
+		<h2> A&ntilde;adir categoria nueva </h2>
 		<form action="admin" method="POST" name="formCat">
 			<input type='hidden' name=accio	value='newCat' />
 			<table>
@@ -81,6 +83,10 @@ function validaCategoria(){
                 <tr><td></td><td><input class='boto' type='button' value='Agregar Categoria' onClick='validaCategoria()' /></td>
 			</table>
 		</form>
+		</div>
+		<div class="listCat">
+			<h2> Listado de Categorias </h2>
+		</div>
 	</div>
 	
 </div>
