@@ -10,7 +10,7 @@ CREATE TABLE language(
 	CONSTRAINT PKLang PRIMARY KEY(id)
 );
 
-INSERT INTO language(lang,langShort) VALUES ('Español','esp'),('Català','cat'),('English','eng');
+INSERT INTO language(lang,langShort) VALUES ('Espa&ntilde;ol','esp'),('Catal&agrave;','cat'),('English','eng');
 	
 -- Category
 -- 	ID (int)

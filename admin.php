@@ -10,25 +10,16 @@ if(isset($_POST['accio']) && ($_POST['accio']=='newCat')){
     $nomCateg=$_POST['nomCateg'];
     $contLang=$_POST['totalLang'];
     $url = strtolower(generateUrl( $nomCateg));
-    echo $url . "<br />";
     $languages=[];
-    //[accio] => newCat [nomCateg] => eeee [lang1] => car [lang2] => daa [lang3] => dde [totalLang] => 3 
     for ($cont=1;$cont<=$contLang;$cont++){
         if (isset($_POST["lang" . $cont]) && $_POST["lang" . $cont] != ""){
-            echo "lang" . $cont .": " .$_POST["lang" . $cont ] . "<br />";
             $languages[$cont] = htmlChars($_POST["lang" . $cont ]);
         } else {
             $languages[$cont] = htmlChars($nomCateg);
 	}
-        echo $cont . "<br />";
     }
     insertCategory($adminLink,$url,$languages);
-    print_r(array_keys($languages));
-    $langKeys=array_keys($languages);
-    foreach ( $langKeys as $key){
-        echo "key:".$languages[$key]."<br />";
-    }
-    echo count($languages);
+    //$langKeys=array_keys($languages);
 }
 ?>
 
@@ -87,9 +78,25 @@ function validaCategoria(){
 		<div class="listCat">
 			<h2> Listado de Categorias </h2>
 			<?php
-        echo "<br /><br />";
- 
-				print_r(getCategoryListing2($adminLink));
+				$categoryList=getCategoryListing2($adminLink) ;
+				if (sizeof($categoryList) > 0) {
+					echo "<table><tr>";
+					echo "<th>ID</th><th>Url</th>";
+					$languages=getLanguages($adminLink);
+					foreach ($languages as $lang){
+						echo "<th>" . $lang->lang . "</th>";
+					}
+					echo "<th>Acciones</th></tr>";
+					foreach( $categoryList as $elem){
+						echo "<tr><td>".$elem->id . "</td>";
+						echo "<td>" . $elem->url . "</td>";
+						foreach($elem->translations as $trans){
+							echo "<td>" . $trans . "</td>";
+						}
+						echo "<td></td></tr>";
+					}
+					echo "</table>";
+				}
 ?>
 		</div>
 	</div>

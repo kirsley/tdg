@@ -151,6 +151,12 @@
 	return $categoryLists;
 	}
 
+    class fullCategory{
+	public $id;
+	public $url;
+	public $translations=[];
+    }
+
     function getCategoryListing2($dbh){
 	$tmpcategory_list=getCategories($dbh);
 	$stmt = $dbh->prepare("SELECT * from cat_trans WHERE cat_id = :cid order by cat_id,lang_id");
@@ -161,12 +167,14 @@
 		$stmt->execute();
 		$translations=[];
 		while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-		print_r($result);
-			$translations[$result['lang_id']]=$results['translation'];
-		echo "<br />";
-		echo "<br />";
+			$translations[$result['lang_id']]=$result['translation'];
 		}
-		$categoryLists[$category->id]=[$category->url,$translation];
+		$myCategory=new fullCategory();
+		$myCategory->id = $category->id;
+		$myCategory->url = $category->url;
+		$myCategory->translations = $translations;
+		
+		$categoryLists[$category->id]=$myCategory;
 	}
 	return $categoryLists;
 }	
