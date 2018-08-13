@@ -14,7 +14,7 @@
         try{
         $dbh = new PDO($dsn,$user,$pass);
         } catch(PDOException $e){
-            echo $e-getMessage();
+            echo $e->getMessage();
         }
         
         return $dbh;
@@ -72,21 +72,12 @@
         return $admin;
     }
     
-    class language{
-        public $id;
-        public $lang;
-        public $langShort;
-    }
     /** ManaginG Data**/
     function getLanguages($dbh){
         $stmt= $dbh->prepare("SELECT * from language");
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_CLASS, "language");
         return $result;
-    }
-    class category {
-        public $id;
-        public $url;
     }
     function getCategories($dbh){
         $stmt= $dbh->prepare("SELECT * from category");
@@ -140,54 +131,59 @@
             }
         }
     }
-    function getCategoryListing($dbh){
-	$stmt=$dbh->prepare("select c.id as cid,c.url as url,GROUP_CONCAT(t.translation) as tanslations,GROUP_CONCAT(t.lang_id) as languages from category c,cat_trans t WHERE t.cat_id = c.id group by c.id ;");
-	$stmt->execute();
-	$categoryLists=[];
-	while ( $result = $stmt->fetch(PDO::FETCH_ASSOC)) {
-		$categoryLists[$result['cid']] = $result;
-	}
-	$stmt=null;
-	return $categoryLists;
-	}
 
-    class fullCategory{
-	public $id;
-	public $url;
-	public $translations=[];
+    function getCategoryListing($dbh){
+    	$tmpcategory_list=getCategories($dbh);
+    	$stmt = $dbh->prepare("SELECT * from cat_trans WHERE cat_id = :cid order by cat_id,lang_id");
+    	$stmt->bindParam(":cid",$cid);
+            $categoryList=[];
+    	foreach ( $tmpcategory_list as $category ){
+    		$cid=$category->id;
+    		$stmt->execute();
+    		$translations=[];
+    		while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+    			$translations[$result['lang_id']]=$result['translation'];
+    		}
+    		$myCategory=new fullCategory();
+    		$myCategory->id = $category->id;
+    		$myCategory->url = $category->url;
+    		$myCategory->translations = $translations;
+    		
+    		$categoryList[$category->id]=$myCategory;
+    	}
+    	return $categoryList;
+    }	
+    
+    function removeCategory($dbh,$cat){
+        if(!getProductsByCategory($dbh,$cat)){
+            $stmt = $dbh->preprare("DELETE from categories WHERE id = :cat");
+            $stmt->bindParam(":cat",$cat);
+            if($stmt->execute()){
+                echo "eliminado";
+            }
+        } else {
+            echo "alert('no eliminable');";
+        }
+    }
+    function getProductsByCategory($dbh,$cat){
+        $stmt = $dbh->prepare("SELECT * from product where cat_id = :cat_id");
+        $stmt->bindParam(":cat_id",$cat);
+        $product_list = $stmt->fetchAll(PDO::FETCH_CLASS, "product");
+        return $product_list;
     }
 
-    function getCategoryListing2($dbh){
-	$tmpcategory_list=getCategories($dbh);
-	$stmt = $dbh->prepare("SELECT * from cat_trans WHERE cat_id = :cid order by cat_id,lang_id");
-	$stmt->bindParam(":cid",$cid);
-        $categoryLists=[];
-	foreach ( $tmpcategory_list as $category ){
-		$cid=$category->id;
-		$stmt->execute();
-		$translations=[];
-		while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-			$translations[$result['lang_id']]=$result['translation'];
-		}
-		$myCategory=new fullCategory();
-		$myCategory->id = $category->id;
-		$myCategory->url = $category->url;
-		$myCategory->translations = $translations;
-		
-		$categoryLists[$category->id]=$myCategory;
-	}
-	return $categoryLists;
-}	
-
-
     function htmlChars($str){
+    $str=str_replace("'","&#39;",$str);
 	$charEq = array('Á','á','À','Â','à','Â','â','Ä','ä','Ã','ã','Å','å','Æ','æ','Ç','ç','Ð','ð','É','é','È','è','Ê','ê','Ë','ë','Í','í','Ì','ì','Î','î','Ï','ï','Ñ','ñ','Ó','ó','Ò','ò','Ô','ô','Ö','ö','Õ','õ','Ø','ø','ß','Þ','þ','Ú','ú','Ù','ù','Û','û','Ü','ü','Ý','ý','ÿ');
         $htmlChars = array('&Aacute;','&aacute;','&Agrave;','&Acirc;','&agrave;','&Acirc;','&acirc;','&Auml;','&auml;','&Atilde;','&atilde;','&Aring;','&aring;','&Aelig;','&aelig;','&Ccedil;','&ccedil;','&Eth;','&eth;','&Eacute;','&eacute;','&Egrave;','&egrave;','&Ecirc;','&ecirc;','&Euml;','&euml;','&Iacute;','&iacute;','&Igrave;','&igrave;','&Icirc;','&icirc;','&Iuml;','&iuml;','&Ntilde;','&ntilde;','&Oacute;','&oacute;','&Ograve;','&ograve;','&Ocirc;','&ocirc;','&Ouml;','&ouml;','&Otilde;','&otilde;','&Oslash;','&oslash;','&szlig;','&Thorn;','&thorn;','&Uacute;','&uacute;','&Ugrave;','&ugrave;','&Ucirc;','&ucirc;','&Uuml;','&uuml;','&Yacute;','&yacute;','&yuml;');
 	return str_replace($charEq, $htmlChars, $str);
 
 }
-    function generateUrl($str) {        
-        $str=str_replace(" ","-",$str);
+function generateUrl($str) {
+        $str=str_replace("'","-",$str);
+        $str=str_replace(" ","-",$str); 
+        $str=str_replace("--","-",$str);  
+    
         $a = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ', 'Ά', 'ά', 'Έ', 'έ', 'Ό', 'ό', 'Ώ', 'ώ', 'Ί', 'ί', 'ϊ', 'ΐ', 'Ύ', 'ύ', 'ϋ', 'ΰ', 'Ή', 'ή');
         $b = array('A', 'A', 'A', 'A', 'A', 'A', 'AE', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'D', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 's', 'a', 'a', 'a', 'a', 'a', 'a', 'ae', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y', 'A', 'a', 'A', 'a', 'A', 'a', 'C', 'c', 'C', 'c', 'C', 'c', 'C', 'c', 'D', 'd', 'D', 'd', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'G', 'g', 'G', 'g', 'G', 'g', 'G', 'g', 'H', 'h', 'H', 'h', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'IJ', 'ij', 'J', 'j', 'K', 'k', 'L', 'l', 'L', 'l', 'L', 'l', 'L', 'l', 'l', 'l', 'N', 'n', 'N', 'n', 'N', 'n', 'n', 'O', 'o', 'O', 'o', 'O', 'o', 'OE', 'oe', 'R', 'r', 'R', 'r', 'R', 'r', 'S', 's', 'S', 's', 'S', 's', 'S', 's', 'T', 't', 'T', 't', 'T', 't', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'W', 'w', 'Y', 'y', 'Y', 'Z', 'z', 'Z', 'z', 'Z', 'z', 's', 'f', 'O', 'o', 'U', 'u', 'A', 'a', 'I', 'i', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'A', 'a', 'AE', 'ae', 'O', 'o', 'Α', 'α', 'Ε', 'ε', 'Ο', 'ο', 'Ω', 'ω', 'Ι', 'ι', 'ι', 'ι', 'Υ', 'υ', 'υ', 'υ', 'Η', 'η');
     

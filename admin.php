@@ -19,7 +19,6 @@ if(isset($_POST['accio']) && ($_POST['accio']=='newCat')){
 	}
     }
     insertCategory($adminLink,$url,$languages);
-    //$langKeys=array_keys($languages);
 }
 ?>
 
@@ -50,6 +49,7 @@ function acceptChanges(id){
 function deleteCat(id){
 	res = confirm("Eliminar categoria " + id + "?");
 	if (res){
+		 document.location='admin?accion=borrar&cat_id='+ id ;
 		//se Procede con el Eliminado
 	}
 }
@@ -97,30 +97,8 @@ function deleteCat(id){
 		<div class="listCat">
 			<h2> Listado de Categorias </h2>
 			<?php
-				$categoryList=getCategoryListing2($adminLink) ;
-				if (sizeof($categoryList) > 0) {
-					echo "<table><tr>";
-					echo "<th>ID</th><th>Url</th>";
-					$languages=getLanguages($adminLink);
-					foreach ($languages as $lang){
-						echo "<th>" . $lang->lang . "</th>";
-					}
-					echo "<th colspan='2'>Acciones</th></tr>";
-					$cont=0;
-					foreach( $categoryList as $elem){
-						echo "<tr><td>".$elem->id . "</td>";
-						echo "<td>" . $elem->url . "</td>";
-						foreach($elem->translations as $trans){
-							echo "<td>" . $trans . "</td>";
-						}
-						echo "<td class='tdOpts'><img class='modifOpts' src='img/modif.png' oncLick='modificaCat(\"".$elem->id."\")' id='modif" . $elem->id . "' style='display:block;'/> <img class='modifOpts' src='img/accept.png' id='accept".$elem->id."' style ='display: none;' onclick='acceptChanges(\"".$elem->id."\")'/> </td>";
-						echo "<td class='tdOpts'><img class='modifOpts' src='img/del.png' id='delete' onclick='deleteCat(\"" . $elem->id . "\")' /></td>";
-						echo "</tr>";
-					}
-					$cont++;
-					echo "</table>";
-				}
-?>
+			     include_once 'includes/category_list.php';
+			 ?>
 		</div>
 	</div>
 	

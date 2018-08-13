@@ -204,8 +204,22 @@ h2 {
 .tdOpts {
 	width:30px;
 }
-.together{
-	position:absolute;
-	left:0px;
-	top:0px;
+
+.inputEditable {
+	border: 0;
+	background-color: transparent;
+	text-align:left;
+	width:120px;
+	border-color: #000;
+	text-shadow: -1px 1px 0px #FFF;
+}
+
+.inputEditable:FOCUS {
+	border: 1px solid;
+	background-color: transparent;
+	width: 80px;
+	border-color: #000;
+	text-shadow: -1px 1px 0px #FFF;
+	height: 18px;
+	background-color: #FFF;
 }
