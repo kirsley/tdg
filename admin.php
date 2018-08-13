@@ -34,6 +34,25 @@ function validaCategoria(){
 					$('input[id="nomCateg2"]').css("backgroundColor","#FF9999");
 			}
 		}
+
+function modificaCat(id){
+	modifId="#modif" + id;
+	acceptId="#accept" + id;
+	$(modifId).css('display','none');
+	$(acceptId).css('display','block');
+}
+function acceptChanges(id){
+        modifId="#modif" + id;
+        acceptId="#accept" + id;
+        $(acceptId).css('display','none');
+        $(modifId).css('display','block');
+}
+function deleteCat(id){
+	res = confirm("Eliminar categoria " + id + "?");
+	if (res){
+		//se Procede con el Eliminado
+	}
+}
 </script>
 </head>
 <body>
@@ -86,15 +105,19 @@ function validaCategoria(){
 					foreach ($languages as $lang){
 						echo "<th>" . $lang->lang . "</th>";
 					}
-					echo "<th>Acciones</th></tr>";
+					echo "<th colspan='2'>Acciones</th></tr>";
+					$cont=0;
 					foreach( $categoryList as $elem){
 						echo "<tr><td>".$elem->id . "</td>";
 						echo "<td>" . $elem->url . "</td>";
 						foreach($elem->translations as $trans){
 							echo "<td>" . $trans . "</td>";
 						}
-						echo "<td></td></tr>";
+						echo "<td class='tdOpts'><img class='modifOpts' src='img/modif.png' oncLick='modificaCat(\"".$elem->id."\")' id='modif" . $elem->id . "' style='display:block;'/> <img class='modifOpts' src='img/accept.png' id='accept".$elem->id."' style ='display: none;' onclick='acceptChanges(\"".$elem->id."\")'/> </td>";
+						echo "<td class='tdOpts'><img class='modifOpts' src='img/del.png' id='delete' onclick='deleteCat(\"" . $elem->id . "\")' /></td>";
+						echo "</tr>";
 					}
+					$cont++;
 					echo "</table>";
 				}
 ?>
