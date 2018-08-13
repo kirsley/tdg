@@ -1,0 +1,17 @@
+Generate class.php file
+
+Backend - Admin:
+Toggle tabs
+ADMIN CATEGORIES
+	INSERT new Category
+	LIST Categories
+	MODIFY Categories
+	DELETE category
+
+ADMIN PRODUCT
+	INSERT new Product
+		Add Image and upload it to uploads/ folder
+	List Products
+	modify Product
+	delete Product
+
