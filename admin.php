@@ -24,6 +24,18 @@ if(isset($_POST['accio']) && ($_POST['accio']=='newCat')){
 	if (isset($_GET['cat_id'])){
 		removeCategory($adminLink,$_GET['cat_id']);
 	}
+} elseif (isset($_GET['accio']) && ($_GET['accio']=='modCat')){
+	if (isset($_GET['cat_id'])){
+	$catId=$_GET['cat_id'];
+	$languages=[];
+	foreach(array_keys($_GET) as $akey){
+		if (substr($akey, 0, 4) === 'lang'){
+			$langId=substr($akey,4);
+			$languages[$langId] = $_GET[$akey] ;
+		}
+	}
+	print_r($languages);
+	}
 }
 ?>
 
@@ -45,12 +57,11 @@ function modificaCat(id){
 	acceptId="#accept" + id;
 	$(modifId).css('display','none');
 	$(acceptId).css('display','block');
-}
-function acceptChanges(id){
-        modifId="#modif" + id;
-        acceptId="#accept" + id;
-        $(acceptId).css('display','none');
-        $(modifId).css('display','block');
+	querylist="accio=modCat&cat_id="+id;
+	$("#cat"+ id).find("input").each(function () {
+		querylist = querylist + "&" + $(this).prop('name') + "=" + $(this).val()
+		});
+	document.location='admin?' + querylist;
 }
 function deleteCat(id){
 	res = confirm("Eliminar categoria " + id + "?");
