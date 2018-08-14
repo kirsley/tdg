@@ -1,5 +1,5 @@
 <?php
-
+echo "<h2> Listado de Categorias </h2>";
 $categoryList=getCategoryListing($adminLink) ;
 if (sizeof($categoryList) > 0) {
     echo "<table><tr>";

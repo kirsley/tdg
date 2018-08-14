@@ -155,16 +155,15 @@
     }	
     
     function removeCategory($dbh,$cat){
+	$success = 0;
         if(!getProductsByCategory($dbh,$cat)){
-            $stmt = $dbh->preprare("DELETE from categories WHERE id = :cat");
+            $stmt = $dbh->prepare("DELETE from category WHERE id = :cat");
             $stmt->bindParam(":cat",$cat);
-            if($stmt->execute()){
-                echo "eliminado";
-            }
-        } else {
-            echo "alert('no eliminable');";
+            $success=$stmt->execute();
         }
+	return $success;
     }
+
     function getProductsByCategory($dbh,$cat){
         $stmt = $dbh->prepare("SELECT * from product where cat_id = :cat_id");
         $stmt->bindParam(":cat_id",$cat);
@@ -173,13 +172,13 @@
     }
 
     function htmlChars($str){
-    $str=str_replace("'","&#39;",$str);
+	$str=str_replace("'","&#39;",$str);
 	$charEq = array('Á','á','À','Â','à','Â','â','Ä','ä','Ã','ã','Å','å','Æ','æ','Ç','ç','Ð','ð','É','é','È','è','Ê','ê','Ë','ë','Í','í','Ì','ì','Î','î','Ï','ï','Ñ','ñ','Ó','ó','Ò','ò','Ô','ô','Ö','ö','Õ','õ','Ø','ø','ß','Þ','þ','Ú','ú','Ù','ù','Û','û','Ü','ü','Ý','ý','ÿ');
         $htmlChars = array('&Aacute;','&aacute;','&Agrave;','&Acirc;','&agrave;','&Acirc;','&acirc;','&Auml;','&auml;','&Atilde;','&atilde;','&Aring;','&aring;','&Aelig;','&aelig;','&Ccedil;','&ccedil;','&Eth;','&eth;','&Eacute;','&eacute;','&Egrave;','&egrave;','&Ecirc;','&ecirc;','&Euml;','&euml;','&Iacute;','&iacute;','&Igrave;','&igrave;','&Icirc;','&icirc;','&Iuml;','&iuml;','&Ntilde;','&ntilde;','&Oacute;','&oacute;','&Ograve;','&ograve;','&Ocirc;','&ocirc;','&Ouml;','&ouml;','&Otilde;','&otilde;','&Oslash;','&oslash;','&szlig;','&Thorn;','&thorn;','&Uacute;','&uacute;','&Ugrave;','&ugrave;','&Ucirc;','&ucirc;','&Uuml;','&uuml;','&Yacute;','&yacute;','&yuml;');
 	return str_replace($charEq, $htmlChars, $str);
+    }	
 
-}
-function generateUrl($str) {
+    function generateUrl($str) {
         $str=str_replace("'","-",$str);
         $str=str_replace(" ","-",$str); 
         $str=str_replace("--","-",$str);  

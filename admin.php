@@ -4,7 +4,8 @@ include_once 'includes/adminAuthValidation.php';
 include_once 'includes/libsheader.php';
 $adminLink=conectarpdo($GLOBALS['MYSQL_BDNAME']);
 $errors = '';
-
+//TODO migrate this to AJAX
+//TODO determine which libraries are needed
 
 if(isset($_POST['accio']) && ($_POST['accio']=='newCat')){
     $nomCateg=$_POST['nomCateg'];
@@ -19,11 +20,16 @@ if(isset($_POST['accio']) && ($_POST['accio']=='newCat')){
 	}
     }
     insertCategory($adminLink,$url,$languages);
+} elseif (isset($_GET['accio']) && ($_GET['accio']=='delCat')){
+	if (isset($_GET['cat_id'])){
+		removeCategory($adminLink,$_GET['cat_id']);
+	}
 }
 ?>
 
 <html>
 <head>
+<title> Toc de Gralla - Administrador </title>
 <script>
 function validaCategoria(){
 			if (($('input[name="nomCateg"]').val() != "")){
@@ -49,14 +55,14 @@ function acceptChanges(id){
 function deleteCat(id){
 	res = confirm("Eliminar categoria " + id + "?");
 	if (res){
-		 document.location='admin?accion=borrar&cat_id='+ id ;
+		 document.location='admin?accio=delCat&cat_id='+ id ;
 		//se Procede con el Eliminado
 	}
 }
 </script>
 </head>
 <body>
-<?php include_once 'includes/adminHeader.php'?>
+<?php //include_once 'includes/adminHeader.php'?>
 <div class="menuContainer">
 	<div class="opcMen">
 		<table>
@@ -95,7 +101,6 @@ function deleteCat(id){
 		</form>
 		</div>
 		<div class="listCat">
-			<h2> Listado de Categorias </h2>
 			<?php
 			     include_once 'includes/category_list.php';
 			 ?>
