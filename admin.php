@@ -43,6 +43,10 @@
 <head>
 <title> Toc de Gralla - Administrador </title>
 <script>
+
+function marcarCanvi( id ){
+	$("#accept" + id).css('display','block');
+}
     function validaCategoria(){
 	    if (($('input[name="nomCateg"]').val() != "")){
 			$('form[name="formCat"]').submit();
@@ -51,11 +55,8 @@
 		}
 	}
 
-    function modificaCat(id){
-	    modifId="#modif" + id;
-    	acceptId="#accept" + id;
-    	$(modifId).css('display','none');
-    	$(acceptId).css('display','block');
+    function acceptChanges(id){
+    	$("#accept" + id).css('display','none');
 	    querylist="accio=modCat&cat_id="+id;
     	$("#cat"+ id).find("input").each(function () {
 	    	querylist = querylist + "&" + $(this).prop('name') + "=" + encodeURIComponent($(this).val());

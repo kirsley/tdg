@@ -15,11 +15,12 @@
             }
         }
         insertCategory($adminLink,$url,$languages);
-    } else if(isset($_POST['accio']) && ($_POST['accio']=='modCat')) {
+    } elseif ((isset($_POST['accio']) && ($_POST['accio']=='modCat'))) {
     	//TODO Modify Cat
-    } else if ((isset($_POST['accio']) && ($_POST['accio']=='delCat')) {
+    } elseif ((isset($_POST['accio']) && ($_POST['accio']=='delCat'))) {
     	//TODO delete cat
-    } else ((isset($_POST['accio']) && ($_POST['accio']=='listCat')) {
+    	
+    } elseif ((isset($_POST['accio']) && ($_POST['accio']=='listCat'))) {
         echo "<h2> Listado de Categorias </h2>";
         $categoryList=getCategoryListing($adminLink) ;
         if (sizeof($categoryList) > 0) {
@@ -45,6 +46,6 @@
     	    echo "</table>";
     	}
     }
-    desconectarpdo($adminLink){
+    desconectarpdo($adminLink);
  
 ?>

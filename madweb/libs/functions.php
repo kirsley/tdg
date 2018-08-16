@@ -8,7 +8,6 @@ function ejecutaQuery($query, $link){
 }
 /**
  * FunciÃ³n para hallar nÃºmeros
- * @param unknown_type $val
  * @return boolean
  */
 function esNumero($val){
@@ -23,7 +22,6 @@ function esNumero($val){
 
 /**
  * Funcion para hallar un entero
- * @param unknown_type $val
  * @return boolean
  */
 function esEntero($val){
@@ -34,7 +32,6 @@ function esEntero($val){
  * Funcion para controlar el valor recibido segun sea el tipo de dato
  * @param String $text Texto a validar
  * @param String $tipo Numerico o Cadena de texto
- * @return Cierto o Falso segun sea valido o no
  */
 function validarInput( $text , $tipo){
 	if ($tipo=='string' ){
@@ -55,7 +52,6 @@ function validarInput( $text , $tipo){
 
 /**
  * Limpia un string preparandolo para utilizarlo en una consulta SQL
- * @param $value Cadena con codigo a insertar en sentencias mysql
  * @return $value string limpio de sentencias sql
  */
 function limpiar($value){
@@ -98,7 +94,6 @@ function conectar(){
 
 /**
  * Funci&oacute;n para terminar correctamente la conexi&oacute;n con la base de datos
- * @param $link enlace de conexi&oacute;n
  */
 function desconectar($link){
 	mysqli_close($link);
@@ -186,7 +181,6 @@ function eliminaElement($id,$link){
  * Elimina, unicament, els Llibres del Autor indicat. En cas de tenir altres tipus d'elements dins
  * de l'entitat element, no els eliminarà
  * @param int $idAut --> Id del Autor a Eliminar
- * @param enllaç $link --> Enllaç de la conexió a la bd
  */
 function vaciaLibAutor($idAut,$link){
 	$getElemSQL="SELECT idElement FROM element e,llibres ll WHERE e.idElement = ll.idLlibre AND idAutor=".$idAut;
