@@ -1,6 +1,6 @@
-<div class="cabeceraAdmin">
+<div class="cabecera cabeceraAdmin">
 	<div class='cabecConj'>
-	<div class='cabecera'></div>
+	<div class='cabeceraAdmImg'></div>
 	<div class='cabTitle'>Administrador Toc de Gralla</div>
 	</div>
 	<div class='logout'>
