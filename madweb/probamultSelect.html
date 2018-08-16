@@ -1,0 +1,102 @@
+<html>
+
+<script type='text/javascript' src='js/jquery.js'></script>
+<script type='text/javascript' src='js/jquerymd5.js'></script>
+<script type='text/javascript'>
+function up() {
+	obj=document.getElementById('example');
+	indice=obj.selectedIndex;
+	if (indice>0){
+		cambiar(obj,indice,indice-1)
+	};
+}
+function down() {
+	obj=document.getElementById('example');
+	indice=obj.selectedIndex;
+	if (indice!=-1 && indice<obj.length-1)
+		cambiar(obj,indice,indice+1);
+}
+function cambiar(obj,num1,num2) {
+	proVal=obj.options[num1].value;
+	proTex=obj.options[num1].text;
+	obj.options[num1].value=obj.options[num2].value;
+	aux=obj.options[num2].text;	
+	obj.options[num1].text=aux.replace(num2+1,num1+1);	
+	obj.options[num2].value=proVal;
+	obj.options[num2].text=proTex.replace(num1+1,num2+1);
+  obj.selectedIndex=num2;
+}
+</script>
+
+<body>
+	<select id="example" name="example" multiple="multiple">
+		<option value="1">1 Pepe</option>
+		<option value="2">2 Juan</option>
+		<option value="3">3 Jose</option>
+		<option value="4">4 Abu</option>
+		<option value="5">5 Oriol</option>
+	</select>
+	<input type='button' onclick='up()' value='up'/>
+	<input type='button' onclick='down()' value='down' />
+	
+	<table>
+		<tr>
+			<th>Llista Participants</th>
+			<th>&nbsp;</th>
+			<th>Resultats</th>
+			<th colspan='2'>&nbsp;</th>			
+		</tr>
+		<tr>
+			<td rowspan='5'>
+				<select id="example" name="example" multiple="multiple">
+					<option value="1">1 Pepe</option>
+					<option value="2">2 Juan</option>
+					<option value="3">3 Jose</option>
+					<option value="4">4 Abu</option>
+					<option value="5">5 Oriol</option>
+				</select>
+			</td> 
+			<td>&nbsp;</td>
+			<td rowspan='5'>
+				<select id="example" name="example" multiple="multiple">
+					<option value="1">1 Pepe</option>
+					<option value="2">2 Juan</option>
+					<option value="3">3 Jose</option>
+					<option value="4">4 Abu</option>
+					<option value="5">5 Oriol</option>
+				</select>
+			</td> 
+			<td colspan='2'>&nbsp;</td>	
+		</tr>
+		<tr>
+			<td><input type='button' value='>>' /></td>
+			<td>&nbsp;</td>
+			<td><input type='button' value='^' /></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td colspan='2'>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><input type='button' value='<<' /></td>
+			<td>&nbsp;</td>
+			<td><input type='button' value='v' /></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td colspan='2'>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan='5'>&nbsp;</td>
+		</tr>
+		<tr>
+			<td colspan='2'>&nbsp;</td>
+			<td> <input type='text'></td>
+			<td><input type='button' value='Ok' /></td>
+			<td>&nbsp;</td>
+		</tr>
+</table>
+</body>
+</html>
