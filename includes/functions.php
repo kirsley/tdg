@@ -206,4 +206,20 @@
         return str_replace($a, $b, $str);
     }
     
+    
+    /***** FUNCTIONS for INDEX ****/
+    function getCategoryLang($dbh,$lang){
+        $stmt=$dbh->prepare("SELECT c.id as cat_id,c.url as url, ct.translation as translation from category c, cat_trans ct where c.id = ct.cat_id AND ct.lang_id = (select id from language where langShort = :lang)");
+        $stmt->bindValue(":lang",$lang);
+        $result=$stmt->execute();
+        $categories=[];
+        while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $newCat=new langCategory();
+            $newCat->id = $result['cat_id'];
+            $newCat->url = $result['url'];
+            $newCat->descrip = $result['translation'];
+            $categories[$newCat->id]=$newCat;
+        }
+        return $categories;
+    }
 ?>

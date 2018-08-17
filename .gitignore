@@ -3,3 +3,4 @@
 .settings
 .*swp
 prop/tdg.properties.php
+/prop/

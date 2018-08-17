@@ -5,7 +5,11 @@ class category {
     public $url;
 }
 
-
+class langCategory{
+    public $id;
+    public $url;
+    public $descrip;
+}
 class fullCategory{
     public $id;
     public $url;
