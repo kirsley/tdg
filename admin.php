@@ -1,7 +1,6 @@
 <?php
     include_once 'includes/headers.php';
     include_once 'includes/adminAuthValidation.php';
-    include_once 'includes/libsheader.php';
     $adminLink=conectarpdo($GLOBALS['MYSQL_BDNAME']);
     $errors = '';
 //TODO migrate this to AJAX
@@ -41,49 +40,25 @@
 
 <html>
 <head>
+<?php
+    include_once 'includes/libsheader.php';
+?>
 <title> Toc de Gralla - Administrador </title>
-<script>
-
-function marcarCanvi( id ){
-	$("#accept" + id).css('display','block');
-}
-    function validaCategoria(){
-	    if (($('input[name="nomCateg"]').val() != "")){
-			$('form[name="formCat"]').submit();
-		}else{
-					$('input[id="nomCateg2"]').css("backgroundColor","#FF9999");
-		}
-	}
-
-    function acceptChanges(id){
-    	$("#accept" + id).css('display','none');
-	    querylist="accio=modCat&cat_id="+id;
-    	$("#cat"+ id).find("input").each(function () {
-	    	querylist = querylist + "&" + $(this).prop('name') + "=" + encodeURIComponent($(this).val());
-		    });
-    	document.location='admin?' + querylist;
-    }
-
-    function deleteCat(id){
-    	res = confirm("Eliminar categoria " + id + "?");
-	    if (res){
-		    document.location='admin?accio=delCat&cat_id='+ id ;
-    		//se Procede con el Eliminado
-	    }
-    }
-</script>
 </head>
 <body>
 <?php include_once 'includes/adminHeader.php'?>
+<div class="options">
+        <div class="opcMen">
+                <table>
+                        <tr>
+                                <td><div class="opcs" style="background-color:#fff7ac;"> Administrar Categorias </div></td>
+                                <td><div class="opcs" onmouseover="sobre(this)"
+                                                onmouseout="fora(this)" onclick="javascript:document.location='platos'"> Administrar Platos </div></td>
+                        </tr>
+                </table>
+        </div>
+</div>
 <div class="menuContainer">
-	<div class="opcMen">
-		<table>
-			<tr>
-				<td><div class="opcs"> Administrar Categorias </div></td>
-				<td><div class="opcs"> Administrar Platos </div></td>
-			</tr>
-		</table>
-	</div>
 	<div class="manage" id="catMang">
 		<div class="container addCat">
 		<h2> A&ntilde;adir categoria nueva </h2>

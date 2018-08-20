@@ -1,96 +1,57 @@
-	function validarKeyEnter( e ){
-		if (e.keyCode == 13){
-			validarPass();
-		}
-	}
-	
-	function configuracion(){
-		
-		$(".searchButtonOffClick:first").addClass("searchButtonOff");
-		$(".searchButtonOffClick:first").removeClass("searchButtonOffClick");
-		
-		$(".purgaButtonClick:first").addClass("purgaButton");
-		$(".purgaButtonClick:first").removeClass("purgaButtonClick");
-		
-		
-		$(".searchButton:first").addClass("searchButtonClick");
-		$(".searchButton:first").removeClass("searchButton");
-		
-		$("#searchFiles").fadeIn("slow");
-		$("#buscaForm").fadeOut("slow");
-		$("#purgaForm").fadeOut("slow");	
-	}
-	function busqueda(){
-		$(".searchButtonClick:first").addClass("searchButton");
-		$(".searchButtonClick:first").removeClass("searchButtonClick");
-		
-		$(".purgaButtonClick:first").addClass("purgaButton");
-		$(".purgaButtonClick:first").removeClass("purgaButtonClick");
-		
-		$(".searchButtonOff:first").addClass("searchButtonOffClick");
-		$(".searchButtonOff:first").removeClass("searchButtonOff");
-		
-		$("#searchFiles").fadeOut("slow");
-		$("#buscaForm").fadeIn("slow");	
-		$("#purgaForm").fadeOut("slow");	
-	}
-	
-	function purga(){
+function marcarCanvi( id ){
+        $("#accept" + id).css('display','block');
+}
+function validaCategoria(){
+    if (($('input[name="nomCateg"]').val() != "")){
+        $('form[name="formCat"]').submit();
+    }else{
+        $('input[id="nomCateg2"]').css("backgroundColor","#FF9999");
+    }
+}
 
-		$(".searchButtonClick:first").addClass("searchButton");
-		$(".searchButtonClick:first").removeClass("searchButtonClick");
-		
-		$(".purgaButton:first").addClass("purgaButtonClick");
-		$(".purgaButton:first").removeClass("purgaButton");
-		
-		$(".searchButtonOffClick:first").addClass("searchButtonOff");
-		$(".searchButtonOffClick:first").removeClass("searchButtonOffClick");
-		
-		$("#searchFiles").fadeOut("slow");
-		$("#buscaForm").fadeOut("slow");	
-		$("#purgaForm").fadeIn("slow");		
-	}
-	
-	function marcarChange( id ){
-		$("#data"+ id).find("#imgSave").fadeIn("slow");
-	}
-	
-	function save(id){
-		
-		var limit = $("#data"+ id).find("input[name='limit']:first").val();
-	    var dayLimit = $("#data"+ id).find("input[name='dayLimit']:first").val();
-	    
-	    $.ajax({
-	    	  url: 'services/service.updateDataUser.php',
-	    	  type: 'POST',
-	    	  async: false,
-	    	  data: 'limit='+limit+'&dayLimit='+dayLimit+'&iduser='+id,
-	    	  success: function( res ){
-	    			
-	    		if (res==0){
-				    	saveOk(id);
-				    }else{
-				    	errorSave(res);
-				    }
-	    	  },
-	    	  error: errorSave
-	    	});
+function categoryList() {
+        if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+        } else {// code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        $("listCat2").innerHTML = xmlhttp.responseText;
+                }
+        };
 
-	}
-	
-	function saveOk(id){
-		$("#data"+ id).find("#imgSave").fadeOut("slow");
-	}
-	
-	function errorSave(res){
-		if(res==1){
-			alert("Usuario no actualizado.\n\nLa cuota Diaria supera al espacio total permitido");			
-		}else{
-			alert("No se han podido actualizar los datos del usuario.");
-		}
+        xmlhttp.open("GET", "services/manage_category.php?accio=listCat", true);
+        xmlhttp.send();
+}
 
-	}
-	
-	function descargarFichero( idfile ){
-	document.location='download.php?idfile=' + idfile ;
-	}
+
+
+function acceptChanges(id){
+        $("#accept" + id).css('display','none');
+            querylist="accio=modCat&cat_id="+id;
+        $("#cat"+ id).find("input").each(function () {
+                querylist = querylist + "&" + $(this).prop('name') + "=" + encodeURIComponent($(this).val());
+                    });
+        document.location='admin?' + querylist;
+    }
+
+function deleteCat(id){
+        res = confirm("Eliminar categoria " + id + "?");
+            if (res){
+                    document.location='admin?accio=delCat&cat_id='+ id ;
+                //se Procede con el Eliminado
+            }
+    }
+
+function sobre(elem) {
+        elem.style.backgroundImage = "url('img/fonsOps.png')";
+	elem.style.background = '#fff7ac';
+}
+
+function fora(elem) {
+        elem.style.backgroundImage = "";
+	elem.style.background = '#f3d772';
+}
+

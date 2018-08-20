@@ -167,12 +167,12 @@
 
 .menuContainer{
 	position:relative;
-	top: 100px;
 }
 .opcMen {
-	margin: 0px auto;
+	margin: 30px auto 20px;
 	min-width:820px;
 	max-width:900px;
+
 }
 .opcMen table{
 	width:820px;
@@ -183,9 +183,11 @@
 	min-width:200px;
 	margin:0px 15px;
 	border-bottom: 1px solid;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
 	border-color: #000;
-	-webkit-box-shadow: 0px 6px 8px #ababab;
-	-moz-box-shadow: 0px 6px 8px #ababab;
+        -moz-box-shadow: 6px 6px 8px #804000;
+        -webkit-box-shadow: 6px 6px 8px #804000;
 	background-color:#f3d772;
 }
 
@@ -203,7 +205,6 @@
 	position:relative;
 	float:left;
 	padding:10px;
-/*        background-color:#f3cc72;*/
 	max-width:300px;
 }
 .addCat table{
@@ -220,7 +221,6 @@
 	padding:5px;
 	position:absolute;
 	right:0px;
- /*       background-color:#f3cc72;*/
 	min-width:500px;
 	max-width:600px;
 }
@@ -256,6 +256,22 @@
 	text-shadow: -1px 1px 0px #FFF;
 	height: 18px;
 	background-color: #FFF;
+}
+
+/* PLATOS Page */
+
+.platListAdd {
+	min-width:890px;
+	width:85%;
+/*	max-width:800px;*/
+}
+.platListAdd table{
+	max-width:890px;
+        text-align:center;
+        font-size: 13px;
+}
+.inputList{
+	min-width:150px;
 }
 
 
@@ -343,16 +359,14 @@
 /***GENERICS***/
 body{
         text-align: center;
-
-
-background: rgba(193,158,103,1);
-background: -moz-linear-gradient(-45deg, rgba(193,158,103,1) 0%, rgba(182,141,76,0.87) 25%, rgba(222,196,156,0.93) 64%, rgba(243,226,199,0.93) 85%, rgba(243,226,199,0.85) 100%);
-background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(193,158,103,1)), color-stop(25%, rgba(182,141,76,0.87)), color-stop(64%, rgba(222,196,156,0.93)), color-stop(85%, rgba(243,226,199,0.93)), color-stop(100%, rgba(243,226,199,0.85)));
-background: -webkit-linear-gradient(-45deg, rgba(193,158,103,1) 0%, rgba(182,141,76,0.87) 25%, rgba(222,196,156,0.93) 64%, rgba(243,226,199,0.93) 85%, rgba(243,226,199,0.85) 100%);
-background: -o-linear-gradient(-45deg, rgba(193,158,103,1) 0%, rgba(182,141,76,0.87) 25%, rgba(222,196,156,0.93) 64%, rgba(243,226,199,0.93) 85%, rgba(243,226,199,0.85) 100%);
-background: -ms-linear-gradient(-45deg, rgba(193,158,103,1) 0%, rgba(182,141,76,0.87) 25%, rgba(222,196,156,0.93) 64%, rgba(243,226,199,0.93) 85%, rgba(243,226,199,0.85) 100%);
-background: linear-gradient(135deg, rgba(193,158,103,1) 0%, rgba(182,141,76,0.87) 25%, rgba(222,196,156,0.93) 64%, rgba(243,226,199,0.93) 85%, rgba(243,226,199,0.85) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c19e67', endColorstr='#f3e2c7', GradientType=1 );
+		background: rgba(193,158,103,1);
+		background: -moz-linear-gradient(left, rgba(193,158,103,1) 0%, rgba(182,141,76,0.87) 25%, rgba(233,212,179,0.66) 64%, rgba(243,226,199,0.55) 85%, rgba(243,226,199,0.47) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(193,158,103,1)), color-stop(25%, rgba(182,141,76,0.87)), color-stop(64%, rgba(233,212,179,0.66)), color-stop(85%, rgba(243,226,199,0.55)), color-stop(100%, rgba(243,226,199,0.47)));
+		background: -webkit-linear-gradient(left, rgba(193,158,103,1) 0%, rgba(182,141,76,0.87) 25%, rgba(233,212,179,0.66) 64%, rgba(243,226,199,0.55) 85%, rgba(243,226,199,0.47) 100%);
+		background: -o-linear-gradient(left, rgba(193,158,103,1) 0%, rgba(182,141,76,0.87) 25%, rgba(233,212,179,0.66) 64%, rgba(243,226,199,0.55) 85%, rgba(243,226,199,0.47) 100%);
+		background: -ms-linear-gradient(left, rgba(193,158,103,1) 0%, rgba(182,141,76,0.87) 25%, rgba(233,212,179,0.66) 64%, rgba(243,226,199,0.55) 85%, rgba(243,226,199,0.47) 100%);
+		background: linear-gradient(to right, rgba(193,158,103,1) 0%, rgba(182,141,76,0.87) 25%, rgba(233,212,179,0.66) 64%, rgba(243,226,199,0.55) 85%, rgba(243,226,199,0.47) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c19e67', endColorstr='#f3e2c7', GradientType=1 );
 
 }
 

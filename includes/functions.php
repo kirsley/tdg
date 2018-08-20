@@ -185,6 +185,21 @@
         return $product_list;
     }
 
+    function uploadImage(){
+        $idImg=0;
+	$destFolder='uploads';
+        if(is_uploaded_file($_FILES['pltImg']['tmp_name'])) {
+		$name=generateUrl($_FILES['pltImg']['name']);
+		$tmp_name = $_FILES['pltImg']['tmp_name'];
+		$destPath=$destFolder . "/" . $name;
+		move_uploaded_file($tmp_name, $destPath);
+		$idImg=$destPath;
+        }
+        return $idImg;
+    }
+
+
+
     function htmlChars($str){
 	$str=str_replace("&","&amp;",$str);
 	$str=str_replace("'","&#39;",$str);
@@ -194,6 +209,7 @@
     }	
 
     function generateUrl($str) {
+	$str=strtolower($str);
         $str=str_replace("'","-",$str);
         $str=str_replace(" ","-",$str); 
 	$str=str_replace("&","-",$str);

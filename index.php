@@ -1,6 +1,5 @@
 <?php
     include_once 'includes/headers.php';
-    include_once 'includes/libsheader.php';
     if (isset($_POST['lreset'])){
         unset($_SESSION['language']);
     }elseif (isset($_POST['language'])){
@@ -13,6 +12,7 @@
 <head>
 <meta charset="utf-8">
 <?php 
+    include_once 'includes/libsheader.php';
 $lang='';
 if(isset($_SESSION['language'])){
     $lang=$_SESSION['language'];
