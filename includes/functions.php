@@ -85,6 +85,22 @@
         $result = $stmt->fetchAll(PDO::FETCH_CLASS, "category");
         return $result;        
     }
+
+    function getProductListsBasic($dbh){
+	$categories = getCategories($dbh);
+	$products = [];
+	foreach ($categories as $cat){
+		$prod=getProductsByCategory($dbh,$cat->id);
+		if ($prod){
+			foreach($prod as $p){
+				
+				$products[$p->id] = $p;
+			}
+		}
+	}
+	return $products;
+    }
+
     function categoryExist($dbh,$url){
         $categories = getCategories($dbh);
         $exist="";
@@ -108,7 +124,33 @@
         return $id;
         
     }
-    
+    function insertPlate($dbh,$cat_id,$name,$url,$languages,$imgPath){
+	$stmt = $dbh->prepare("INSERT INTO product (name,url,img_path,cat_id)  VALUES (:name,:url,:imgpath,:catid)");
+	$stmt->bindParam(":url",$url);
+	$stmt->bindParam(":name",$name);
+        $stmt->bindParam(":imgpath",$imgPath);
+        $stmt->bindParam(":catid",$cat_id);
+	$stmt->execute();
+	$plateId=$dbh->lastInsertId();
+        if($plateId){
+            if (count($languages) > 0){
+                $stmt2=$dbh->prepare("INSERT INTO prod_trans (prod_id,lang_id,translation) values (:prodId,:langId,:languages)");
+                $stmt2->bindParam(':prodId', $plateId);
+                $stmt2->bindParam(':langId', $lang_id);
+                $stmt2->bindParam(':languages', $translation);
+                $langKeys=array_keys($languages);
+                foreach ( $langKeys as $key){
+                    $lang_id=$key;
+                    $translation=$languages[$key];
+                    $stmt2->execute();
+                }
+            }
+        }
+
+	echo $plateId;
+
+    }
+
     function insertCategory($dbh,$url,$languages){
         $stmt=$dbh->prepare("INSERT INTO category (url) values (:url)");
         $stmt->bindValue(":url",$url);
@@ -181,6 +223,7 @@
     function getProductsByCategory($dbh,$cat){
         $stmt = $dbh->prepare("SELECT * from product where cat_id = :cat_id");
         $stmt->bindParam(":cat_id",$cat);
+	$stmt->execute();
         $product_list = $stmt->fetchAll(PDO::FETCH_CLASS, "product");
         return $product_list;
     }

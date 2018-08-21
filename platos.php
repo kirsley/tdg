@@ -2,15 +2,23 @@
     include_once 'includes/headers.php';
     include_once 'includes/adminAuthValidation.php';
     $adminLink=conectarpdo($GLOBALS['MYSQL_BDNAME']);
-	if(isset($_POST['accio'])){
+	if(isset($_POST['accio']) && $_POST['accio'] == 'newPlate'){
 		$imgPath=uploadImage();
-		if ($imgPath){
-			echo"fichero subido en " . $imgPath;
-		} else {
-			echo "fichero no subido";
+		if (!$imgPath){
+			$imgPath = 'uploads/no_image.jpg';
 		}
-		//Array ( [accio] => newPlate [pltName] => Patatas Bravas [pltCateg] => 4 [lang1] => Patatas Bravas hechas con nuestra Salsa Casera [lang2] => Patates braves acompanyades de la nostra salsa casolana [lang28] => Chip potatoes with our won Homemade Sauce [totalLang] => 3 )
-		print_r($_POST);
+		$cat_id= $_POST['pltCateg'];
+		$name = $_POST['pltName'];
+		$url = strtolower(generateUrl( $name));
+		$name =htmlChars($name);
+                $languages=[];
+                foreach(array_keys($_POST) as $akey){
+                        if (substr($akey, 0, 4) === 'lang'){
+                                $langId=substr($akey,4);
+                                $languages[$langId] = htmlChars($_POST[$akey]) ;
+                        }
+                }
+                insertPlate($adminLink,$cat_id,$name,$url,$languages,$imgPath);
 	}
 ?>
 
@@ -51,9 +59,20 @@
 			?>
 		</div>
 		<div class='platList container'>
-			<table>
-			<tr><th>ID</th><th>Nombre corto</th><th>Categoria</th><th>Imagen</th><th>Acciones</th></tr>
-			</table>
+			<?php
+			$products=getProductListsBasic($adminLink);
+			if($products){
+			var_dump($products);
+			echo "<table>";
+			echo "<tr><th>ID</th><th>Nombre corto</th><th>Categoria</th><th>Imagen</th><th>Acciones</th></tr>";
+			
+			foreach ($products as $prod) {
+				echo "<tr><td>".$prod->id."</td><td>".$prod->name."</td><td>".$prod->cat_id."</td><td>".$prod->img_path."</td><td></td></tr>";
+			}
+			}	
+			echo "</table>";
+			?>
+
 		</div>
 	<div>
 </div>
