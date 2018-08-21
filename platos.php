@@ -37,7 +37,7 @@
 </script>
 </head>
 <body>
-<?php //include_once 'includes/adminHeader.php'?>
+<?php include_once 'includes/adminHeader.php'?>
 <div class="options">
         <div class="opcMen">
                 <table>
@@ -62,12 +62,12 @@
 			<?php
 			$products=getProductListsBasic($adminLink);
 			if($products){
-			var_dump($products);
+//			var_dump($products);
 			echo "<table>";
 			echo "<tr><th>ID</th><th>Nombre corto</th><th>Categoria</th><th>Imagen</th><th>Acciones</th></tr>";
 			
 			foreach ($products as $prod) {
-				echo "<tr><td>".$prod->id."</td><td>".$prod->name."</td><td>".$prod->cat_id."</td><td>".$prod->img_path."</td><td></td></tr>";
+				echo "<tr><td>".$prod->id."</td><td>".$prod->name."</td><td>".$prod->translation."</td><td>".$prod->img_path."</td><td></td></tr>";
 			}
 			}	
 			echo "</table>";

@@ -221,7 +221,7 @@
         }
     }
     function getProductsByCategory($dbh,$cat){
-        $stmt = $dbh->prepare("SELECT * from product where cat_id = :cat_id");
+        $stmt = $dbh->prepare("SELECT p.id,p.name,p.url,p.img_path,c.cat_id,c.translation from product p,cat_trans c,language l where  l.id = c.lang_id AND c.cat_id = p.cat_id AND l.langShort = 'esp' AND p.cat_id = :cat_id");
         $stmt->bindParam(":cat_id",$cat);
 	$stmt->execute();
         $product_list = $stmt->fetchAll(PDO::FETCH_CLASS, "product");
