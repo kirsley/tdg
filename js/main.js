@@ -55,3 +55,21 @@ function fora(elem) {
 	elem.style.background = '#f3d772';
 }
 
+function get_platos() {
+        $.ajax({
+                url:"services/manage_platos.php",
+                data: {"accio":"listPlat"},
+                method:"POST",
+                success: function(data){
+                        $('#platList').html(data);
+                }
+        });
+}
+
+function listCategories(){
+	$.ajax({
+		url:"services/manage_category.php",
+});
+}
+
+
