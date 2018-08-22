@@ -29,6 +29,11 @@
 ?>
 <title> Toc de Gralla - Administrador </title>
 <script>
+
+$(document).ready(function(){
+	get_platos();
+});
+
 	function guardarNuevo(){
         $('form[name="platForm"]').submit();
     }
@@ -48,31 +53,15 @@
                 </table>
         </div>
 </div>
-<!--<div class='button' onclick='categoryList();'> Categorias </div>
-<div id='listCat2'>
-</div>-->
 <div class="menuContainer">
-	<div class="manage" id="pltMng">
+	<div class="pltMng" id="pltMng">
 		<div class="newPlt container">
 			<?php 
 				include_once "newPlato.php"; 
 			?>
 		</div>
-		<div class='platList container'>
-			<?php
-			$products=getProductListsBasic($adminLink);
-			if($products){
-//			var_dump($products);
-			echo "<table>";
-			echo "<tr><th>ID</th><th>Nombre corto</th><th>Categoria</th><th>Imagen</th><th>Acciones</th></tr>";
-			
-			foreach ($products as $prod) {
-				echo "<tr><td>".$prod->id."</td><td>".$prod->name."</td><td>".$prod->translation."</td><td>".$prod->img_path."</td><td></td></tr>";
-			}
-			}	
-			echo "</table>";
-			?>
-
+		<div class='platList container' id='platList' onclick='get_platos()'>
+GET PLATOS
 		</div>
 	<div>
 </div>

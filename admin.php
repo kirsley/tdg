@@ -3,39 +3,6 @@
     include_once 'includes/adminAuthValidation.php';
     $adminLink=conectarpdo($GLOBALS['MYSQL_BDNAME']);
     $errors = '';
-//TODO migrate this to AJAX
-//TODO determine which libraries are needed
-
-	if(isset($_POST['accio']) && ($_POST['accio']=='newCat')){
-	    $nomCateg=$_POST['nomCateg'];
-	    $contLang=$_POST['totalLang'];
-	    $url = strtolower(generateUrl( $nomCateg));
-	    $languages=[];
-	    for ($cont=1;$cont<=$contLang;$cont++){
-	        if (isset($_POST["lang" . $cont]) && $_POST["lang" . $cont] != ""){
-	            $languages[$cont] = htmlChars($_POST["lang" . $cont ]);
-	        } else {
-	            $languages[$cont] = htmlChars($nomCateg);
-		}
-	    }
-	    insertCategory($adminLink,$url,$languages);
-	} elseif (isset($_GET['accio']) && ($_GET['accio']=='delCat')){
-		if (isset($_GET['cat_id'])){
-			removeCategory($adminLink,$_GET['cat_id']);
-		}
-	} elseif (isset($_GET['accio']) && ($_GET['accio']=='modCat')){
-		if (isset($_GET['cat_id'])){
-		$catId=$_GET['cat_id'];
-		$languages=[];
-		foreach(array_keys($_GET) as $akey){
-			if (substr($akey, 0, 4) === 'lang'){
-				$langId=substr($akey,4);
-				$languages[$langId] = $_GET[$akey] ;
-			}
-		}
-		updateCategory($adminLink,$catId,$languages);
-		}
-	}
 ?>
 
 <html>
@@ -44,6 +11,12 @@
     include_once 'includes/libsheader.php';
 ?>
 <title> Toc de Gralla - Administrador </title>
+<script>
+$(document).ready(function(){
+        listCategories();
+});
+
+</script>
 </head>
 <body>
 <?php include_once 'includes/adminHeader.php'?>
@@ -88,9 +61,6 @@
 		</form>
 		</div>
 		<div class="container listCat" id="listCat">
-			<?php
-			     include_once 'includes/category_list.php';
-			 ?>
 		</div>
 	</div>
 	

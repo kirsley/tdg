@@ -260,20 +260,50 @@
 
 /* PLATOS Page */
 
-.platListAdd {
-	min-width:890px;
-	width:85%;
-/*	max-width:800px;*/
-}
-.platListAdd table{
-	max-width:890px;
-        text-align:center;
-        font-size: 13px;
-}
-.inputList{
-	min-width:150px;
+.pltMng {
+        position:relative;
+        top:10px;
+        background-color:#f3d772;
+        margin:0px auto;
+        min-width:910px;
+	max-width:950px;
+        font-size:12px;
+
 }
 
+.newPlt {
+        position:relative;
+        float:left;
+        padding:10px;
+        max-width:300px;
+}
+.newPlt table{
+        margin:0px auto;
+        width:300px;
+        font-size:12px;
+}
+
+.newPlt input{
+        max-width: 180px;
+}
+.frmTitle{
+	width:140px;
+	text-align:left;
+}
+
+.platList {
+        padding:5px;
+        position:absolute;
+        right:0px;
+        min-width:500px;
+        max-width:700px;
+}
+.platList table{
+        width:600px;
+	margin:10px;
+        text-align:center;
+        font-size: 14px;
+}
 
 /* FROM INDEX PAGE */	
 #langMen {
