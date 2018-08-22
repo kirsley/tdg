@@ -5,6 +5,7 @@
        	$products=getProductListsBasic($adminDbh);
 	$response="";
        if($products){
+       $response .= "<h2>Listado de Platos</h2>";
        $response .="<table>";
        $response .= "<tr><th>ID</th><th>Nombre corto</th><th>Categoria</th><th>Imagen</th><th>Acciones</th></tr>";
 

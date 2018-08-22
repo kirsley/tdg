@@ -267,8 +267,12 @@
     
     
     /***** FUNCTIONS for INDEX ****/
-    function getCategoryLang($dbh,$lang){
-        $stmt=$dbh->prepare("SELECT c.id as cat_id,c.url as url, ct.translation as translation from category c, cat_trans ct where c.id = ct.cat_id AND ct.lang_id = (select id from language where langShort = :lang)");
+    function getCategoryLang($dbh,$lang,$filtered){
+	$query = "SELECT c.id as cat_id,c.url as url, ct.translation as translation from category c, cat_trans ct where c.id = ct.cat_id AND ct.lang_id = (select id from language where langShort = :lang)";
+	if($filtered){
+		$query .= " AND c.id in (select cat_id from product)";
+	}
+        $stmt=$dbh->prepare($query);
         $stmt->bindValue(":lang",$lang);
         $result=$stmt->execute();
         $categories=[];

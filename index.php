@@ -57,7 +57,7 @@ if(isset($_SESSION['language'])){
 	echo "</div>";
 	} else {
 	    $dbh=conectarpdo('tdg');
-	    $categories= getCategoryLang($dbh,$lang);
+	    $categories= getCategoryLang($dbh,$lang,1);
 	    
 	    
 	    echo "<div id=\"cuerpo\">";

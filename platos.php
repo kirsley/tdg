@@ -61,7 +61,6 @@ $(document).ready(function(){
 			?>
 		</div>
 		<div class='platList container' id='platList' onclick='get_platos()'>
-GET PLATOS
 		</div>
 	<div>
 </div>
