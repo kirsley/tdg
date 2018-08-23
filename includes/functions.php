@@ -86,11 +86,22 @@
         return $result;        
     }
 
-    function getProductListsBasic($dbh){
+    function getProdBasLstCat($dbh,$cat_id,$start = null,$limit = null){
+        $products = [];
+        $prod=getProductsByCategory($dbh,$cat_id,$start,$limit);
+        if ($prod){
+            foreach($prod as $p){
+
+                $products[$p->id] = $p;
+            }
+        }
+        return $products;
+    }
+    function getProductListsBasic($dbh,$start = null){
 	$categories = getCategories($dbh);
 	$products = [];
 	foreach ($categories as $cat){
-		$prod=getProductsByCategory($dbh,$cat->id);
+		$prod=getProductsByCategory($dbh,$cat->id,$start);
 		if ($prod){
 			foreach($prod as $p){
 				
@@ -146,9 +157,7 @@
                 }
             }
         }
-
-	echo $plateId;
-
+	return $plateId;
     }
 
     function insertCategory($dbh,$url,$languages){
@@ -172,13 +181,14 @@
                 }
             }
         }
+	return $catId;
     }
 
     function getCategoryListing($dbh){
     	$tmpcategory_list=getCategories($dbh);
     	$stmt = $dbh->prepare("SELECT * from cat_trans WHERE cat_id = :cid order by cat_id,lang_id");
     	$stmt->bindParam(":cid",$cid);
-            $categoryList=[];
+        $categoryList=[];
     	foreach ( $tmpcategory_list as $category ){
     		$cid=$category->id;
     		$stmt->execute();
@@ -220,12 +230,38 @@
             $stmt->execute();           
         }
     }
-    function getProductsByCategory($dbh,$cat){
-        $stmt = $dbh->prepare("SELECT p.id,p.name,p.url,p.img_path,c.cat_id,c.translation from product p,cat_trans c,language l where  l.id = c.lang_id AND c.cat_id = p.cat_id AND l.langShort = 'esp' AND p.cat_id = :cat_id");
+    function getProductsByCategory($dbh,$cat,$start = null,$limit = null){
+	$query="SELECT p.id,p.name,p.url,p.img_path,c.cat_id,c.translation from product p,cat_trans c,language l where  l.id = c.lang_id AND c.cat_id = p.cat_id AND l.langShort = 'esp'";
+	if($cat > 0){
+		$query .= " AND p.cat_id = :cat_id";
+	}
+    $query .= " ORDER by c.cat_id";
+	if(isset($start)){
+		if ($limit){
+			$query .= " LIMIT " . $start .",". $limit ;
+		} else {
+			$query .= " LIMIT " . $start .",12" ;
+		}
+	}
+    //echo $query;
+        $stmt = $dbh->prepare($query);
         $stmt->bindParam(":cat_id",$cat);
 	$stmt->execute();
         $product_list = $stmt->fetchAll(PDO::FETCH_CLASS, "product");
         return $product_list;
+    }
+
+    function countProd($dbh,$cat_id){
+        $query = "SELECT count(*) as cnt from  product";
+        if ($cat_id){
+            $query .= " WHERE cat_id = :cat_id";
+        }
+        $stmt = $dbh->prepare($query);
+        $stmt->bindParam(":cat_id",$cat);
+        $stmt->execute();
+        $cnt = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $cnt['cnt'];
+
     }
 
     function uploadImage($cat_id,$url){

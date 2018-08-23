@@ -11,13 +11,20 @@
 		if (!$imgPath){
 			$imgPath = 'uploads/no_image.jpg';
 		}
+	
                 $languages=[];
                 foreach(array_keys($_POST) as $akey){
                         if (substr($akey, 0, 4) === 'lang'){
                                 $langId=substr($akey,4);
-                                $languages[$langId] = htmlChars($_POST[$akey]) ;
+				$lang=htmlChars($_POST[$akey]);
+				if ($lang) {
+	                                $languages[$langId] = $lang ;
+				} else {
+					$languages[$langId] = $name;
+				}
                         }
                 }
+
                 insertPlate($adminLink,$cat_id,$name,$url,$languages,$imgPath);
 	}
 ?>
@@ -31,7 +38,7 @@
 <script>
 
 $(document).ready(function(){
-	get_platos();
+	listaPlatos(0);
 });
 
 	function guardarNuevo(){
@@ -60,7 +67,7 @@ $(document).ready(function(){
 				include_once "newPlato.php"; 
 			?>
 		</div>
-		<div class='platList container' id='platList' onclick='get_platos()'>
+		<div class='platList container' id='platList'>
 		</div>
 	<div>
 </div>

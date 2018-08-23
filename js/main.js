@@ -32,6 +32,18 @@ function get_platos() {
         });
 }
 
+function listaPlatos(start){
+	data = {"accio":"listPlat","startP":start};
+        $.ajax({
+                url:"services/manage_platos.php",
+                data: data,
+                method:"POST",
+                success: function(data){
+                        $('#platList').html(data);
+                }
+        });
+
+}
 function listCategories(){
 	$.ajax({
 		url:"services/manage_category.php",
