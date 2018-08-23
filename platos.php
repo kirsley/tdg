@@ -3,14 +3,14 @@
     include_once 'includes/adminAuthValidation.php';
     $adminLink=conectarpdo($GLOBALS['MYSQL_BDNAME']);
 	if(isset($_POST['accio']) && $_POST['accio'] == 'newPlate'){
-		$imgPath=uploadImage();
-		if (!$imgPath){
-			$imgPath = 'uploads/no_image.jpg';
-		}
 		$cat_id= $_POST['pltCateg'];
 		$name = $_POST['pltName'];
 		$url = strtolower(generateUrl( $name));
 		$name =htmlChars($name);
+		$imgPath=uploadImage($cat_id,$url);
+		if (!$imgPath){
+			$imgPath = 'uploads/no_image.jpg';
+		}
                 $languages=[];
                 foreach(array_keys($_POST) as $akey){
                         if (substr($akey, 0, 4) === 'lang'){

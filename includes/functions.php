@@ -228,11 +228,13 @@
         return $product_list;
     }
 
-    function uploadImage(){
+    function uploadImage($cat_id,$url){
         $idImg=0;
 	$destFolder='uploads';
         if(is_uploaded_file($_FILES['pltImg']['tmp_name'])) {
 		$name=generateUrl($_FILES['pltImg']['name']);
+		$ext=end(explode(".",$name));
+		$name=$url . "-" . $cat_id . "." . $ext;
 		$tmp_name = $_FILES['pltImg']['tmp_name'];
 		$destPath=$destFolder . "/" . $name;
 		move_uploaded_file($tmp_name, $destPath);

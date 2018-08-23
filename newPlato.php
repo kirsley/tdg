@@ -10,7 +10,7 @@
 	echo "<td class='inputList'><input type='text' name='pltName' maxlength='40' value='' /> </td>";/***/
 	echo "</tr>";
     echo "<tr><th class='frmTitle'>Imagen</th> ";
-	echo "<td class='inputList'><input name='pltImg' type='file' /></td>";/***/
+	echo "<td class='inputList'><input name='pltImg' type='file' accept='image/*' /></td>";/***/
 	echo "</tr>";
     echo "<tr><th class='frmTitle'>Categoria </th>";
     echo " <td class='inputList'>";
