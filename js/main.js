@@ -21,6 +21,10 @@ function fora(elem) {
 	elem.style.background = '#f3d772';
 }
 
+function filterCategory(){
+	var cat_id = $('#selectCat').val();
+	listaPlatos(0,cat_id);
+}
 function get_platos() {
         $.ajax({
                 url:"services/manage_platos.php",
@@ -32,8 +36,8 @@ function get_platos() {
         });
 }
 
-function listaPlatos(start){
-	data = {"accio":"listPlat","startP":start};
+function listaPlatos(start,cat_id){
+	data = {"accio":"listPlat","startP":start,"cat_id":cat_id};
         $.ajax({
                 url:"services/manage_platos.php",
                 data: data,

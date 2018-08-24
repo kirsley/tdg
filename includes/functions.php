@@ -254,10 +254,9 @@
     function countProd($dbh,$cat_id){
         $query = "SELECT count(*) as cnt from  product";
         if ($cat_id){
-            $query .= " WHERE cat_id = :cat_id";
-        }
+            $query .= " WHERE cat_id = " . $cat_id;
+       }
         $stmt = $dbh->prepare($query);
-        $stmt->bindParam(":cat_id",$cat);
         $stmt->execute();
         $cnt = $stmt->fetch(PDO::FETCH_ASSOC);
         return $cnt['cnt'];

@@ -305,6 +305,19 @@
         font-size: 14px;
 }
 
+.platList td{
+	border:1px black;
+	border-style: solid dotted none none;
+}
+
+#selectCat{
+   border: 0;
+   background: transparent;
+   font-size: 14px;
+	text-shadow: -1px 1px 0px #FFF;
+	font-weight: bold;
+	text-align:center;
+}
 /* FROM INDEX PAGE */	
 #langMen {
 	position:relative;
