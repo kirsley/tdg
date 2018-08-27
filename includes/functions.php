@@ -235,7 +235,7 @@
 	if($cat > 0){
 		$query .= " AND p.cat_id = :cat_id";
 	}
-    $query .= " ORDER by c.cat_id";
+    $query .= " ORDER by c.cat_id,p.id";
 	if(isset($start)){
 		if ($limit){
 			$query .= " LIMIT " . $start .",". $limit ;

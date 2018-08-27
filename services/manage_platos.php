@@ -6,7 +6,7 @@
 	$start = 0;
 	if (isset($_POST['startP'])){
 		$start = $_POST['startP'];
-		$limit=15;
+		$limit=10;
 	}
         if (isset($_POST['cat_id'])){
                 $cat_id = $_POST['cat_id'];
