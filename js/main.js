@@ -111,3 +111,48 @@ function modifyCategory(data){
         });
 }
 
+function selectAllPlatos(){
+	var checkboxestmp = $('#platList').find(':checkbox');
+	checkboxestmp.prop('checked',$('#selAll').is(':checked'));
+	showHideDelOpt();
+	
+}
+
+function showHideDelOpt(){
+	if($("input[class=platoSel]:checked").length > 0){
+		$('#myLink').css('display','none');
+		$("#delPlatos").fadeIn();
+	} else {
+		$("#delPlatos").css('display','none');
+		$('#myLink').fadeIn();
+	}
+	
+}
+function deleteSelPlatos(){
+	var delPlates = [];
+	$("input[class=platoSel]:checked").each(function (i) {
+		delPlates[i] = $(this).val();
+	});
+	deletePlato(delPlates);
+}
+
+function deletePlato(platos){
+	var data={};
+	if (Array.isArray(platos)){
+	    for (var i = 0;i<platos.length;i++){
+	    	data["plato"+i] = platos[i];
+	    }
+	} else {
+		data["plato1"] = platos;
+	}
+
+	data["accio"]='delPlatos';
+	$.ajax({
+        url:"services/manage_platos.php",
+    	method: "POST",
+        data: data,
+        success: function (data) {
+        	listaPlatos(0);
+    	}
+	});
+}

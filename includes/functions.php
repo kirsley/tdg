@@ -112,6 +112,16 @@
 	return $products;
     }
 
+    function deletePlatos($dbh,$platos){
+        $query="delete from prod_trans WHERE prod_id in(".implode(",", $platos).")";
+        $stmt=$dbh->prepare($query);
+        $success1=$stmt->execute();
+        $query="DELETE from product WHERE id in (".implode(",", $platos).")";
+        $stmt=$dbh->prepare($query);
+        $success2=$stmt->execute();
+        
+        return $success1 && $success2;
+    }
     function categoryExist($dbh,$url){
         $categories = getCategories($dbh);
         $exist="";
@@ -268,7 +278,8 @@
 	$destFolder='uploads';
         if(is_uploaded_file($_FILES['pltImg']['tmp_name'])) {
 		$name=generateUrl($_FILES['pltImg']['name']);
-		$ext=end(explode(".",$name));
+		
+		$ext=array_values(array_slice(explode(".",$name), -1))[0];
 		$name=$url . "-" . $cat_id . "." . $ext;
 		$tmp_name = $_FILES['pltImg']['tmp_name'];
 		$destPath=$destFolder . "/" . $name;
