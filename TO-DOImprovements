@@ -7,7 +7,7 @@ platos.php
 2.- Listado de Platos
 *- Paginar (mostrar un maximo de 12-13 elementos por tabla
 * - Filtrar por Categorias mediante selector
-- Añadir un checkbox que permita (subsituyendo el espacio del ID)
-	· eliminar todos los seleccionados a la vez
-	· Modificar la Categoria de los seleccionados
-- Añadir lupa que permita ver una miniatura de la ficha del plato y modificar desde ahi un plato en concreto
+- Anadir un checkbox que permita (subsituyendo el espacio del ID)
+	� eliminar todos los seleccionados a la vez *
+	� Modificar la Categoria de los seleccionados
+- Anadir lupa que permita ver una miniatura de la ficha del plato y modificar desde ahi un plato en concreto

@@ -2,6 +2,7 @@
     include_once 'headers.php';
     
     $adminDbh=conectarpdo($GLOBALS['MYSQL_BDNAME']);
+    print_r( $_POST);
     if (isset($_POST['accio']) && $_POST['accio'] == 'listPlat'){
     	$cat_id = 0;
     	$start = 0;
@@ -72,7 +73,32 @@
             }
         }
         echo deletePlatos($adminDbh,$platos);
+    } elseif (isset($_POST['accio']) && $_POST['accio'] == 'newPlate'){
+        $cat_id= $_POST['pltCateg'];
+        $name = $_POST['pltName'];
+        $url = strtolower(generateUrl( $name));
+        $name =htmlChars($name);
+        $imgPath=uploadImage($cat_id,$url);
+        if (!$imgPath){
+            $imgPath = 'uploads/no_image.jpg';
+        }
+        
+        $languages=[];
+        foreach(array_keys($_POST) as $akey){
+            if (substr($akey, 0, 4) === 'lang'){
+                $langId=substr($akey,4);
+                $lang=htmlChars($_POST[$akey]);
+                if ($lang) {
+                    $languages[$langId] = $lang ;
+                } else {
+                    $languages[$langId] = $name;
+                }
+            }
+        }
+        
+        insertPlate($adminDbh,$cat_id,$name,$url,$languages,$imgPath);
     }
+    
 	desconectarpdo($adminDbh);
 
 ?>
