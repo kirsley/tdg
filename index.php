@@ -12,7 +12,7 @@
 <head>
 <meta charset="utf-8">
 <?php 
-    include_once 'includes/libsheader.php';
+    include_once 'includes/mainlibsheader.php';
 $lang='';
 if(isset($_SESSION['language'])){
     $lang=$_SESSION['language'];
@@ -27,7 +27,6 @@ if(isset($_SESSION['language'])){
     echo "<title>Toc de Gralla - Bar / Restaurante</title>";
 }
 ?>
-<link rel="stylesheet" href="css/main.css">
 <script>
 	function setLanguage(idioma){
 		$('input[name="language"]').val(idioma);
@@ -80,9 +79,6 @@ if(isset($_SESSION['language'])){
 	    echo "	    </table>";
 	    echo "	    </div>";
 	    echo "	    <div class=\"botones\">";
-	    echo "	    <div class=\"boton\" id=\"back\" >";
-	    echo "	    <a href=\"javascript:history.back()\" ><img src='../img/back.png' /></a>";
-	    echo "	    </div>";
 	    echo "	    <div class=\"boton\" id=\"home\"  >";
 	    echo " <form action=\"index\" method=\"post\" name=\"langReset\">";
 	    echo '<input type="hidden" name="lreset" value="reset">';

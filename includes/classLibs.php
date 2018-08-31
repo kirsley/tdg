@@ -35,6 +35,7 @@ class product {
     public $url;
     public $img_path;
     public $cat_id;
+    public $cat_url;
     public $translation;
 }
     

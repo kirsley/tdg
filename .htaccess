@@ -6,9 +6,9 @@ RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([^/]+)$ index?p=$1 [L]
+RewriteRule ^([^/]+)$ category.php?cat=$1 [L]
 
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([^/]+)/([^/]+)$ index.php?p=$1&sp=$2 [L]
+RewriteRule ^([^/]+)/([^/]+)$ index.php?cat=$1&prodname=$2 [L]
