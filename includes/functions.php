@@ -214,8 +214,27 @@
     		$categoryList[$category->id]=$myCategory;
     	}
     	return $categoryList;
-    }	
-    
+    }
+    function getFullPlato($dbh,$plId){
+	    $stmt=$dbh->prepare("SELECT * from product WHERE id = :pId");
+	$stmt->bindValue(":pId",$plId);
+	    $stmt->execute();
+	    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+	    $myProduct= new fullProduct();
+	    $myProduct->id = $result['id'];
+            $myProduct->name = $result['name'];
+            $myProduct->url = $result['url'];
+            $myProduct->img_path = $result['img_path'];
+            $myProduct->cat_id = $result['cat_id'];
+	    $stmt2=$dbh->prepare("select l.id,l.lang,pt.translation from prod_trans pt,language l where pt.lang_id = l.id and pt.prod_id = :pId");
+	    $stmt2->bindValue(":pId",$plId);
+	     while($result1 = $stmt2->fetch(PDO::FETCH_ASSOC)){
+                        $myProduct->$translations[$result1['id']]=[$result1['lang'],$result1['translation']];
+	     }
+	    return $myProduct;
+
+    }
+
     function removeCategory($dbh,$cat){
 	$success = 0;
         if(!getProductsByCategory($dbh,$cat)){

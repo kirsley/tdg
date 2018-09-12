@@ -41,7 +41,7 @@
     	$response .=  "<th>Imagen</th><th>Acciones</th></tr>";
     
            foreach ($products as $prod) {
-                   $response .= "<tr><td><input type='checkbox' name='platos' class='platoSel' onclick='showHideDelOpt()' value='".$prod->id."' /></td><td>".$prod->name."</td><td>".$prod->translation."</td><td>".$prod->img_path."</td><td></td></tr>";
+                   $response .= "<tr><td><input type='checkbox' name='platos' class='platoSel' onclick='showHideDelOpt()' value='".$prod->id."' /></td><td>".$prod->name."</td><td>".$prod->translation."</td><td>".$prod->img_path."</td><td><a href='modifPlato.php?accio=modifPlat&platoId=".$prod->id."' target=_blank onClick=\"window.open(this.href, this.target, 'width=340,height=360'); return false;\"> <img src='img/icono_lupa.gif' height=20  /> </a></td></tr>";
            	}
            }
     	if (($start + $limit) < $cnt){
