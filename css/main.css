@@ -1,5 +1,3 @@
-
-
 .cabecera {
 	background: rgba(242,216,102,1);
 	background: -moz-linear-gradient(45deg, rgba(242,216,102,1) 0%, rgba(252,234,187,1) 28%, rgba(255,247,172,1) 61%, rgba(252,205,77,1) 100%);
@@ -24,7 +22,7 @@
 .cabeceraMain{
         position: relative;
         text-align:left;
-        height: 100px;
+        height: 80px;
 
         -moz-border-bottom-left-radius: 10px;
         -moz-border-bottom-right-radius: 10px;
@@ -48,7 +46,7 @@
 .cabecImgMain{
 	position: relative;
 	min-width:300px;
-	height:100px;
+	height:80px;
 	left: 0px;
 	background-image: url("../img/logoLargo.png");
 	background-size:contain;
@@ -123,9 +121,9 @@
 }
 
 .botones{
-	position:absolute;
+	position:fixed;
 	right:0px;
-	width:20%;
+	top:200px;
 }
 .botonesInTd {
 	bottom:0px;
@@ -140,42 +138,37 @@
 /***Category Specifics***/
 
 #platos {
-    position:absolute;
-        width:80%;
-        left:50%;
-        margin: 0px 0 0 -350px;
+    position:relative;
+    margin: 40px 300px;
 
 }
 #platos th{
         text-align: justify;
         padding: 0px 10px;
-        width:350px;
 }
 
 #platos3 {
-    position:absolute;
-        width:80%;
-        left:10%;
-        margin: 0px 0 0 -150px;
+    position:relative;
+        margin: 40px 170px;
 
 }
 #platos3 th{
         text-align: justify;
         padding: 0px 10px;
-        width:300px;
 }
 
 
 .platotd {
         margin:5px;
         padding:5px;
-        height:270px;
-        width:370px;
+/*        height:270px;
+        width:300px;*/
+	text-align:center;
 }
 
 .platoimg {
-        max-height:100%;
-        max-width:100%;
+        max-height:270px;
+        max-width:290px;
 }
 
 #producto {
@@ -183,9 +176,24 @@
 
 }
 
+.imagen{
+    border-radius: 30px;
+    position:relative;
+    left:0;
+}
+.imagen img{
+    border-radius: 30px;
+    max-width:1100px;
+    max-height:780px;
+    padding:10px 10px;
+}
+
+
+
 /***GENERICS***/
 body{
         text-align: center;
+	overflow: hidden;
 
 
 background: rgba(193,158,103,1);

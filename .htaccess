@@ -11,4 +11,4 @@ RewriteRule ^([^/]+)$ category.php?cat=$1 [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([^/]+)/([^/]+)$ index.php?cat=$1&prodname=$2 [L]
+RewriteRule ^([^/]+)/([^/]+)$ fitxaplat.php?cat=$1&prodname=$2 [L]

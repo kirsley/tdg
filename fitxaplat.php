@@ -37,62 +37,33 @@ if(isset($_SESSION['language'])){
 <body>
 <?php 
 include_once 'includes/mainHeader.php' ;
-$category=explode(".",$_GET['cat'])[0];
-$cat_id=getCategory($mainDbh,$category);
+//print_r($_GET);
+//Array ( [cat] => ensaladas [prodname] => amanida-cabra.php ) 
+$category = $_GET['cat'];
+$prodUrl=explode(".",$_GET['prodname'])[0];
+//echo $prodUrl;
+$product=getProductByUrl($mainDbh,$prodUrl,$lang)[0];
 
-if ($cat_id > 0){
-	$products=getProductsByCategory($mainDbh,$cat_id,$lang,$start,$limit);
-//	print_r($products);
-	$cnt=count($products);
-//	echo $cnt;
-echo "<div id='cuerpo'>";
 echo "<div id='producto'>";
-/*	if($cnt<5){
-		$divId="platos" . $cnt;
-	} else {
-		$divId = "platos";
-	}
- */	
-	$divId="platos";
-	if ($cnt == 3 || $cnt >= 5) {
-		$divId="platos3";
-	}
-	$mxCol=3;
-	if($cnt == 2 || $cnt == 4){
-		$mxCol=2;
-	}
-echo "<div id='" . $divId ."' >";
-echo "<table>";
-echo "<tr>";
-	$cont=0;
-	for($i = 0; $i < $cnt; $i++){
-		$prod=$products[$i];
-	//	echo "<td class='platotd' ><a href='".$prod->cat_url . "/" . $prod->url ."'>AQUI LAIMAGEN </a></td>";
-		echo "<td class='platotd' ><a href='".$prod->cat_url . "/" . $prod->url ."'><img class='platoimg' src='" . $prod->img_path ."' /> </a></td>";
-		$cont++;
-		if ($cont % $mxCol ==0){
-			echo "</tr>";
-			echo "<tr>";
-			for ($a = $i - ($mxCol - 1); $a <= $i; $a++){
-				echo "<th align='justify'>" . $products[$a]->translation . "</th>";
-			}
-	                echo "</tr>";
-	                echo "<tr>";
-			$cont = 0;
-		}
-	}
-	echo "</tr>";
-	echo "</table>";
-	echo "</div>";
-	echo "<div class='botones'>";
+/*product Object ( [id] => 18 [name] => Calamares andaluza [url] => calamares-andaluza [img_path] => uploads/calamares-andaluza1.jpg [cat_id] => 10 [cat_url] => tapas-calientes [translation] => Calamares a la andaluza )*/
+     echo " <div class='imagen'>";
+           echo "<img src='../" . $product->img_path . "' />";
+                echo "</div>";
+
+//$category=explode(".",$_GET['cat'])[0];
+echo "<div class='botones'>";
+ echo " <div class='boton' id='back' >";
+         echo " <a href='../". $category ."' ><img src='../img/back.png' /></a>";
+                 echo " </div>";
+
 	echo "<div class='boton' id='lista'>";
-	echo "<a href='index'> <img src='./img/lista.png' /> </a>";
+	echo "<a href='../index'> <img src='../img/lista.png' /> </a>";
 	echo "</div>";
             echo "          <div class=\"boton\" id=\"home\"  >";
-            echo " <form action=\"index\" method=\"post\" name=\"langReset\">";
+            echo " <form action=\"../index\" method=\"post\" name=\"langReset\">";
             echo '<input type="hidden" name="lreset" value="reset">';
             echo "</form>";
-            echo "          <img src='./img/home.png' onclick='resetLanguages()' /> ";
+            echo "          <img src='../img/home.png' onclick='resetLanguages()' /> ";
             echo "          </div>";
 
 	echo "</div>";
@@ -101,9 +72,9 @@ echo "<tr>";
 
 
 
-}
+//}
 ?>
-
+ 
 </body>
 <script type="text/javascript">
         <?php
