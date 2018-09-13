@@ -326,6 +326,7 @@
 	max-width:680px;
 	min-width:490px;
 	padding-bottom:10px;
+	z-index:-99;
 }
 
 #modifTlt {
