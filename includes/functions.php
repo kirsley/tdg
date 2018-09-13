@@ -228,9 +228,11 @@
             $myProduct->cat_id = $result['cat_id'];
 	    $stmt2=$dbh->prepare("select l.id,l.lang,pt.translation from prod_trans pt,language l where pt.lang_id = l.id and pt.prod_id = :pId");
 	    $stmt2->bindValue(":pId",$plId);
-	     while($result1 = $stmt2->fetch(PDO::FETCH_ASSOC)){
-                        $myProduct->$translations[$result1['id']]=[$result1['lang'],$result1['translation']];
+	    $stmt2->execute();
+	    while($result1 = $stmt2->fetch(PDO::FETCH_ASSOC)){
+                        $myProduct->translations[$result1['id']]=[$result1['lang'],$result1['translation']];
 	     }
+		    //print_r($myProduct->$translations);
 	    return $myProduct;
 
     }
@@ -259,6 +261,32 @@
             $stmt->execute();           
         }
     }
+
+    function modificarPlato($dbh,$pId,$cat_id,$name,$url,$languages,$imgPath){
+	    $stmt=$dbh->prepare("UPDATE product SET name= :name , url = :url,cat_id = :catId WHERE id=:pid");
+	    $stmt->bindValue(":name",$name);
+	    $stmt->bindValue(":url",$url);
+	    $stmt->bindValue(":catId",$cat_id);
+	    $stmt->bindValue(":pid",$pId);
+	    $stmt->execute();
+	    if($imgPath){
+                $stmt2=$dbh->prepare("UPDATE product SET img_path = :imgPath WHERE id=:pid");
+                $stmt2->bindValue(":pid",$pId);
+		$stmt2->bindValue(":imgPath",$imgPath);
+		$stmt2->execute();
+	    }
+	    $stmt3=$dbh->prepare("UPDATE prod_trans SET translation = :trans WHERE prod_id = :pid AND lang_id = :lang_id");
+	    $stmt3->bindValue(":pid",$pId);
+	    $stmt3->bindParam(":lang_id",$lang_id);
+	    $stmt3->bindParam(":trans",$trans);
+	    $langKeys=array_keys($languages);
+            foreach ($langKeys as $lang_id) {
+            	$trans = htmlChars($languages[$lang_id]);
+	        $stmt3->execute();
+        }
+    }
+
+
     function getProductsByCategory($dbh,$cat,$lang='esp',$start = null,$limit = null){
 	#$query="SELECT p.id,p.name,p.url,p.img_path,c.cat_id,c.translation from product p,cat_trans c,language l where  l.id = c.lang_id AND c.cat_id = p.cat_id AND l.langShort = '" . $lang . "'";
 	$query="select p.id,p.name,p.url,p.img_path,p.cat_id,c.url as cat_url,pt.translation from product p, prod_trans pt,language l,category c where c.id = p.cat_id AND p.id = pt.prod_id AND pt.lang_id = l.id AND l.langShort = '". $lang ."'";

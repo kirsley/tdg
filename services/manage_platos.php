@@ -2,7 +2,6 @@
     include_once 'headers.php';
     
     $adminDbh=conectarpdo($GLOBALS['MYSQL_BDNAME']);
-    print_r( $_POST);
     if (isset($_POST['accio']) && $_POST['accio'] == 'listPlat'){
     	$cat_id = 0;
     	$start = 0;
@@ -41,7 +40,7 @@
     	$response .=  "<th>Imagen</th><th>Acciones</th></tr>";
     
            foreach ($products as $prod) {
-                   $response .= "<tr><td><input type='checkbox' name='platos' class='platoSel' onclick='showHideDelOpt()' value='".$prod->id."' /></td><td>".$prod->name."</td><td>".$prod->translation."</td><td>".$prod->img_path."</td><td><a href='modifPlato.php?accio=modifPlat&platoId=".$prod->id."' target=_blank onClick=\"window.open(this.href, this.target, 'width=340,height=360'); return false;\"> <img src='img/icono_lupa.gif' height=20  /> </a></td></tr>";
+                   $response .= "<tr><td><input type='checkbox' name='platos' class='platoSel' onclick='showHideDelOpt()' value='".$prod->id."' /></td><td>".$prod->name."</td><td>".$prod->cat_url."</td><td>".$prod->img_path."</td><td><a href='modifPlato.php?accio=modifPlat&platoId=".$prod->id."' target=_blank onClick=\"window.open(this.href, this.target,'toolbar=no,resizable=no, width=340,height=360'); return false;\"> <img src='img/icono_lupa.gif' height=20  /> </a></td></tr>";
            	}
            }
     	if (($start + $limit) < $cnt){

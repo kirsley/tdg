@@ -26,7 +26,30 @@
                 }
 
                 insertPlate($adminLink,$cat_id,$name,$url,$languages,$imgPath);
+	} elseif (isset($_POST['accio']) && $_POST['accio']=='modif'){
+		print_r($_POST);
+		$pid=$_POST['plId'];
+                $cat_id= $_POST['pltCateg'];
+                $name = $_POST['pltName'];
+                $url = strtolower(generateUrl( $name));
+                $name =htmlChars($name);
+                $imgPath=uploadImage($cat_id,$url);
+                $languages=[];
+                foreach(array_keys($_POST) as $akey){
+                        if (substr($akey, 0, 4) === 'lang'){
+                                $langId=substr($akey,4);
+                                $lang=htmlChars($_POST[$akey]);
+                                if ($lang) {
+                                        $languages[$langId] = $lang ;
+                                } else {
+                                        $languages[$langId] = $name;
+                                }
+                        }
+		}
+		modificarPlato($adminLink,$pid,$cat_id,$name,$url,$languages,$imgPath);
+
 	}
+    	
 ?>
 
 <html>
@@ -49,7 +72,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<?php include_once 'includes/adminHeader.php'?>
+<?php //include_once 'includes/adminHeader.php'?>
 <div class="options">
         <div class="opcMen">
                 <table>

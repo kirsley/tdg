@@ -1,5 +1,6 @@
 <?php
-    include_once 'includes/headers.php';
+include_once 'includes/headers.php';
+$errors="";
     if (isset($_POST['lreset'])){
         unset($_SESSION['language']);
     }elseif (isset($_POST['language'])){
