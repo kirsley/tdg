@@ -17,7 +17,8 @@
         $products=getProdBasLstCat($adminDbh,$cat_id,$start,$limit);
     	$response="";
            if($products){
-           $response .= "<h2>Listado de Platos</h2>";
+           $response .= "<div class='titular'><div id='plListTlt'><h2>Listado de Platos</h2></div>";
+           $response .= "<div id='modifTlt'><img src='img/modif.png' onclick='listaPlatos(0)' /></div></div>";
            $response .="<table>";
     	
            $response .= "<tr><th><input type='checkbox' id='selAll' onclick='selectAllPlatos()'/></th><th>Nombre corto</th>";
@@ -40,7 +41,10 @@
     	$response .=  "<th>Imagen</th><th>Acciones</th></tr>";
     
            foreach ($products as $prod) {
-                   $response .= "<tr><td><input type='checkbox' name='platos' class='platoSel' onclick='showHideDelOpt()' value='".$prod->id."' /></td><td>".$prod->name."</td><td>".$prod->cat_url."</td><td>".$prod->img_path."</td><td><a href='modifPlato.php?accio=modifPlat&platoId=".$prod->id."' target=_blank onClick=\"window.open(this.href, this.target,'toolbar=no,resizable=no, width=340,height=360'); return false;\"> <img src='img/icono_lupa.gif' height=20  /> </a></td></tr>";
+		   $response .= "<tr><td><input type='checkbox' name='platos' class='platoSel' onclick='showHideDelOpt()' value='".$prod->id."' /></td>";
+		   $response .= "<td>".$prod->name."</td><td>".$prod->cat_url."</td><td>".$prod->img_path."</td>";
+		   $response .= "<td><a href='modifPlato.php?accio=modifPlat&platoId=".$prod->id."' target=_blank onClick=\"window.open(this.href, this.target,'toolbar=no,resizable=no, width=340,height=360'); return false;\"> <img src='img/icono_lupa.gif' height=20  /> </a> ";
+		   $response .= "<img class='modifOpts' src='img/del.png' id='delete' onclick='deletePlato(\"" . $prod->id . "\")' style='height:18px;' /></td></tr>";
            	}
            }
     	if (($start + $limit) < $cnt){

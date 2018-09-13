@@ -72,7 +72,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<?php //include_once 'includes/adminHeader.php'?>
+<?php include_once 'includes/adminHeader.php'?>
 <div class="options">
         <div class="opcMen">
                 <table>

@@ -318,6 +318,20 @@
 	font-weight: bold;
 	text-align:center;
 }
+.titular{
+	position:relative;
+}
+#plListTlt{
+	position:absolute;
+	max-width:680px;
+	min-width:490px;
+	padding-bottom:10px;
+}
+
+#modifTlt {
+	position:relative;
+	float:right;
+}
 /* FROM INDEX PAGE */	
 #langMen {
 	position:relative;
@@ -413,7 +427,9 @@ body{
 
 }
 
-
+a {
+    text-decoration: none;
+}
 h2{
         font-size: 13pt;
         margin-top: 1px;
