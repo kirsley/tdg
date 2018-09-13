@@ -308,7 +308,18 @@
         $product_list = $stmt->fetchAll(PDO::FETCH_CLASS, "product");
         return $product_list;
     }
+    
+    function getProductByUrl($dbh,$url,$lang='esp'){
+	    $query="select p.id,p.name,p.url,p.img_path,p.cat_id,c.url as cat_url,pt.translation from product p, prod_trans pt,language l,category c where c.id = p.cat_id AND p.id = pt.prod_id AND pt.lang_id = l.id AND l.langShort = :lang AND p.url = :url ";
+	    $stmt = $dbh->prepare($query);
+	    $stmt->bindValue(":lang",$lang);
+	    $stmt->bindValue(":url",$url);
+	    $stmt->execute();
+	    $product_list = $stmt->fetchAll(PDO::FETCH_CLASS, "product");
+        return $product_list;
 
+
+    }
     function countProd($dbh,$cat_id){
         $query = "SELECT count(*) as cnt from  product";
         if ($cat_id){
