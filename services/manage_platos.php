@@ -42,7 +42,7 @@
     
            foreach ($products as $prod) {
 		   $response .= "<tr><td><input type='checkbox' name='platos' class='platoSel' onclick='showHideDelOpt()' value='".$prod->id."' /></td>";
-		   $response .= "<td>".$prod->name."</td><td>".$prod->cat_url."</td><td>".$prod->img_path."</td>";
+		   $response .= "<td><a href='" . $prod->cat_url . "/" . $prod->url ."' target='_blank' >".$prod->name."</a></td><td>".$prod->cat_url."</td><td>".$prod->img_path."</td>";
 		   $response .= "<td><a href='modifPlato.php?accio=modifPlat&platoId=".$prod->id."' target=_blank onClick=\"window.open(this.href, this.target,'toolbar=no,resizable=no, width=340,height=360'); return false;\"> <img src='img/icono_lupa.gif' height=20  /> </a> ";
 		   $response .= "<img class='modifOpts' src='img/del.png' id='delete' onclick='deletePlato(\"" . $prod->id . "\")' style='height:18px;' /></td></tr>";
            	}
