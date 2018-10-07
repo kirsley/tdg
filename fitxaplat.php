@@ -36,43 +36,17 @@ if(isset($_SESSION['language'])){
 </head>
 <body>
 <?php 
-include_once 'includes/mainHeader.php' ;
-//print_r($_GET);
-//Array ( [cat] => ensaladas [prodname] => amanida-cabra.php ) 
-$category = $_GET['cat'];
-$prodUrl=explode(".",$_GET['prodname'])[0];
-//echo $prodUrl;
-$product=getProductByUrl($mainDbh,$prodUrl,$lang)[0];
+    include_once 'includes/mainHeader.php' ;
+    $category = $_GET['cat'];
+    $prodUrl=explode(".",$_GET['prodname'])[0];
+    $product=getProductByUrl($mainDbh,$prodUrl,$lang)[0];
 
-echo "<div id='producto'>";
-/*product Object ( [id] => 18 [name] => Calamares andaluza [url] => calamares-andaluza [img_path] => uploads/calamares-andaluza1.jpg [cat_id] => 10 [cat_url] => tapas-calientes [translation] => Calamares a la andaluza )*/
-     echo " <div class='imagen'>";
-           echo "<img src='../" . $product->img_path . "' />";
-                echo "</div>";
-
-//$category=explode(".",$_GET['cat'])[0];
-echo "<div class='botones'>";
- echo " <div class='boton' id='back' >";
-         echo " <a href='../". $category ."' ><img src='../img/back.png' /></a>";
-                 echo " </div>";
-
-	echo "<div class='boton' id='lista'>";
-	echo "<a href='../index'> <img src='../img/lista.png' /> </a>";
+    echo "<div id='producto'>";
+    echo " <div class='imagen'>";
+    echo "<img src='../" . $product->img_path . "' />";
+    echo "</div>";
+    include_once "botonesPlt.php";
 	echo "</div>";
-            echo "          <div class=\"boton\" id=\"home\"  >";
-            echo " <form action=\"../index\" method=\"post\" name=\"langReset\">";
-            echo '<input type="hidden" name="lreset" value="reset">';
-            echo "</form>";
-            echo "          <img src='../img/home.png' onclick='resetLanguages()' /> ";
-            echo "          </div>";
-
-	echo "</div>";
-	echo "</div>";
-	echo "</div>";
-
-
-
-//}
 ?>
  
 </body>

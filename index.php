@@ -36,6 +36,10 @@ if(isset($_SESSION['language'])){
 		$('form[name="langReset"]').submit();
 		
 	}
+
+	$(document).ready(function(){
+		listaCategorias(0,'<?= $lang ?>');
+	});
 </script>
 </head>
 <body>
@@ -55,15 +59,16 @@ if(isset($_SESSION['language'])){
 	echo "</div>";
 	echo "</div>";
 	} else {
+		/*
 	    $dbh=conectarpdo('tdg');
-	    $categories= getCategoryLang($dbh,$lang,1);
-	    
-	    
+	    $categories= getCategoryLang($dbh,$lang,0);//TODO Eliminar esta linea y descomentar la siguiente
+*/
+	    //$categories= getCategoryLang($dbh,$lang,1); //Para que solo muestre las que tienen algo
 	    echo "<div id=\"cuerpo\">";
 	    echo "	    <div id=\"opciones\">";
-	    echo "	    <div id=\"menu\">";
-	    echo "	    <table >";
-	    echo "	    <tr>";
+/*	    echo "	    	<div id=\"menu\">";
+	    echo "	    		<table >";
+	    echo "				    <tr>";
 	    $cont=0;
 	    foreach ($categories as $cat){
 	        if ($cont % 2 == 0){
@@ -71,25 +76,21 @@ if(isset($_SESSION['language'])){
 	            echo "<td> <div class=\"opcMenu\" onclick=\"window.location.href='" . $cat->url . "'\"> <div class='inText' >" . $cat->descrip . "</div> </div></td>";
 	        } else {
 	            echo "<td> <div class=\"opcMenu\" onclick=\"window.location.href='" . $cat->url . "'\"> <div class='inText' >" . $cat->descrip . "</div> </div></td>";
-	            echo "</tr>";	        
+	            echo "</tr>";
 	        }
 	        $cont = $cont + 1;
 	    }
+	    if ($cont % 2 == 1){
+	    	echo "</tr>";
+	    }
 
-	    echo "	    </table>";
+	    echo "	    		</table>";
+	    echo "	    	</div>";*/
 	    echo "	    </div>";
-	    echo "	    <div class=\"botones\">";
-	    echo "	    <div class=\"boton\" id=\"home\"  >";
-	    echo " <form action=\"index\" method=\"post\" name=\"langReset\">";
-	    echo '<input type="hidden" name="lreset" value="reset">';
-	    echo "</form>";
-	    echo "	    <img src='../img/home.png' onclick='resetLanguages()' /> ";
-	    echo "	    </div>";
-	    echo "	    </div>";
-	    echo "	    </div>";
-	    echo "	    </div>";
+	    include_once "botones.php";
+	    echo "</div>";
 	    
-	    desconectarpdo($dbh);
+	   // desconectarpdo($dbh);
 	}
 	?>
 

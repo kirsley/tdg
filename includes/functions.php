@@ -79,6 +79,7 @@
         $result = $stmt->fetchAll(PDO::FETCH_CLASS, "language");
         return $result;
     }
+
     function getCategories($dbh){
         $stmt= $dbh->prepare("SELECT * from category");
         $stmt->execute();
@@ -97,19 +98,20 @@
         }
         return $products;
     }
+
     function getProductListsBasic($dbh,$start = null){
-	$categories = getCategories($dbh);
-	$products = [];
-	foreach ($categories as $cat){
-		$prod=getProductsByCategory($dbh,$cat->id,'esp',$start);
-		if ($prod){
-			foreach($prod as $p){
-				
-				$products[$p->id] = $p;
-			}
-		}
-	}
-	return $products;
+    	$categories = getCategories($dbh);
+    	$products = [];
+    	foreach ($categories as $cat){
+    		$prod=getProductsByCategory($dbh,$cat->id,'esp',$start);
+    		if ($prod){
+    			foreach($prod as $p){
+    				
+    				$products[$p->id] = $p;
+    			}
+    		}
+    	}
+    	return $products;
     }
 
     function deletePlatos($dbh,$platos){
@@ -122,6 +124,7 @@
         
         return $success1 && $success2;
     }
+
     function categoryExist($dbh,$url){
         $categories = getCategories($dbh);
         $exist="";
@@ -132,6 +135,7 @@
         }
         return $exist;
     }
+
     function getCategory($dbh,$url){
         $stmt=$dbh->prepare("SELECT * FROM category WHERE url=:url");
         $stmt->bindValue(":url",$url);
@@ -146,13 +150,13 @@
     }
 
     function insertPlate($dbh,$cat_id,$name,$url,$languages,$imgPath){
-	$stmt = $dbh->prepare("INSERT INTO product (name,url,img_path,cat_id)  VALUES (:name,:url,:imgpath,:catid)");
-	$stmt->bindParam(":url",$url);
-	$stmt->bindParam(":name",$name);
+    	$stmt = $dbh->prepare("INSERT INTO product (name,url,img_path,cat_id)  VALUES (:name,:url,:imgpath,:catid)");
+    	$stmt->bindParam(":url",$url);
+    	$stmt->bindParam(":name",$name);
         $stmt->bindParam(":imgpath",$imgPath);
         $stmt->bindParam(":catid",$cat_id);
-	$stmt->execute();
-	$plateId=$dbh->lastInsertId();
+    	$stmt->execute();
+    	$plateId=$dbh->lastInsertId();
         if($plateId){
             if (count($languages) > 0){
                 $stmt2=$dbh->prepare("INSERT INTO prod_trans (prod_id,lang_id,translation) values (:prodId,:langId,:languages)");
@@ -167,7 +171,7 @@
                 }
             }
         }
-	return $plateId;
+	   return $plateId;
     }
 
     function insertCategory($dbh,$url,$languages){
@@ -191,7 +195,7 @@
                 }
             }
         }
-	return $catId;
+	    return $catId;
     }
 
     function getCategoryListing($dbh){
@@ -217,28 +221,27 @@
     }
     function getFullPlato($dbh,$plId){
 	    $stmt=$dbh->prepare("SELECT * from product WHERE id = :pId");
-	$stmt->bindValue(":pId",$plId);
+	    $stmt->bindValue(":pId",$plId);
 	    $stmt->execute();
 	    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 	    $myProduct= new fullProduct();
 	    $myProduct->id = $result['id'];
-            $myProduct->name = $result['name'];
-            $myProduct->url = $result['url'];
-            $myProduct->img_path = $result['img_path'];
-            $myProduct->cat_id = $result['cat_id'];
+        $myProduct->name = $result['name'];
+        $myProduct->url = $result['url'];
+        $myProduct->img_path = $result['img_path'];
+        $myProduct->cat_id = $result['cat_id'];
 	    $stmt2=$dbh->prepare("select l.id,l.lang,pt.translation from prod_trans pt,language l where pt.lang_id = l.id and pt.prod_id = :pId");
 	    $stmt2->bindValue(":pId",$plId);
 	    $stmt2->execute();
 	    while($result1 = $stmt2->fetch(PDO::FETCH_ASSOC)){
-                        $myProduct->translations[$result1['id']]=[$result1['lang'],$result1['translation']];
-	     }
-		    //print_r($myProduct->$translations);
+            $myProduct->translations[$result1['id']]=[$result1['lang'],$result1['translation']];
+	    }
+		//print_r($myProduct->$translations);
 	    return $myProduct;
-
     }
-
+ 
     function removeCategory($dbh,$cat){
-	$success = 0;
+	    $success = 0;
         if(!getProductsByCategory($dbh,$cat)){
             $stmt = $dbh->prepare("DELETE from category WHERE id = :cat");
             $stmt->bindValue(":cat",$cat);
@@ -247,7 +250,7 @@
             $stmt->bindValue(":cat_id",$cat);
             $stmt->execute();
         }
-	return $success;
+	    return $success;
     }
 
     function updateCategory($dbh,$catId,$languages){
@@ -270,41 +273,40 @@
 	    $stmt->bindValue(":pid",$pId);
 	    $stmt->execute();
 	    if($imgPath){
-                $stmt2=$dbh->prepare("UPDATE product SET img_path = :imgPath WHERE id=:pid");
-                $stmt2->bindValue(":pid",$pId);
-		$stmt2->bindValue(":imgPath",$imgPath);
-		$stmt2->execute();
+            $stmt2=$dbh->prepare("UPDATE product SET img_path = :imgPath WHERE id=:pid");
+            $stmt2->bindValue(":pid",$pId);
+    		$stmt2->bindValue(":imgPath",$imgPath);
+    		$stmt2->execute();
 	    }
 	    $stmt3=$dbh->prepare("UPDATE prod_trans SET translation = :trans WHERE prod_id = :pid AND lang_id = :lang_id");
 	    $stmt3->bindValue(":pid",$pId);
 	    $stmt3->bindParam(":lang_id",$lang_id);
 	    $stmt3->bindParam(":trans",$trans);
 	    $langKeys=array_keys($languages);
-            foreach ($langKeys as $lang_id) {
-            	$trans = htmlChars($languages[$lang_id]);
+        foreach ($langKeys as $lang_id) {
+        	$trans = htmlChars($languages[$lang_id]);
 	        $stmt3->execute();
         }
     }
 
 
     function getProductsByCategory($dbh,$cat,$lang='esp',$start = null,$limit = null){
-	#$query="SELECT p.id,p.name,p.url,p.img_path,c.cat_id,c.translation from product p,cat_trans c,language l where  l.id = c.lang_id AND c.cat_id = p.cat_id AND l.langShort = '" . $lang . "'";
-	$query="select p.id,p.name,p.url,p.img_path,p.cat_id,c.url as cat_url,pt.translation from product p, prod_trans pt,language l,category c where c.id = p.cat_id AND p.id = pt.prod_id AND pt.lang_id = l.id AND l.langShort = '". $lang ."'";
-	if($cat > 0){
-		$query .= " AND p.cat_id = :cat_id";
-	}
-    $query .= " ORDER by p.name,p.id";
-	if(isset($start)){
-		if ($limit){
-			$query .= " LIMIT " . $start .",". $limit ;
-		} else {
-			$query .= " LIMIT " . $start .",12" ;
-		}
-	}
-    //echo $query;
+	    $query="select p.id,p.name,p.url,p.img_path,p.cat_id,c.url as cat_url,pt.translation from product p, prod_trans pt,language l,category c where c.id = p.cat_id AND p.id = pt.prod_id AND pt.lang_id = l.id AND l.langShort = '". $lang ."'";
+    	if($cat > 0){
+    		$query .= " AND p.cat_id = :cat_id";
+    	}
+        $query .= " ORDER by p.name,p.id";
+    	if(isset($start)){
+    		if ($limit){
+    			$query .= " LIMIT " . $start .",". $limit ;
+    		} else {
+    			$query .= " LIMIT " . $start .",12" ;
+    		}
+    	}
+        //echo $query;
         $stmt = $dbh->prepare($query);
         $stmt->bindParam(":cat_id",$cat);
-	$stmt->execute();
+    	$stmt->execute();
         $product_list = $stmt->fetchAll(PDO::FETCH_CLASS, "product");
         return $product_list;
     }
@@ -317,52 +319,47 @@
 	    $stmt->execute();
 	    $product_list = $stmt->fetchAll(PDO::FETCH_CLASS, "product");
         return $product_list;
-
-
     }
+
     function countProd($dbh,$cat_id){
         $query = "SELECT count(*) as cnt from  product";
         if ($cat_id){
             $query .= " WHERE cat_id = " . $cat_id;
-       }
+        }
         $stmt = $dbh->prepare($query);
         $stmt->execute();
         $cnt = $stmt->fetch(PDO::FETCH_ASSOC);
         return $cnt['cnt'];
-
     }
 
     function uploadImage($cat_id,$url){
         $idImg=0;
-	$destFolder='uploads';
+        $destFolder='uploads';
         if(is_uploaded_file($_FILES['pltImg']['tmp_name'])) {
-		$name=generateUrl($_FILES['pltImg']['name']);
-		
-		$ext=array_values(array_slice(explode(".",$name), -1))[0];
-		$name=$url . "-" . $cat_id . "." . $ext;
-		$tmp_name = $_FILES['pltImg']['tmp_name'];
-		$destPath=$destFolder . "/" . $name;
-		move_uploaded_file($tmp_name, $destPath);
-		$idImg=$destPath;
+    		$name=generateUrl($_FILES['pltImg']['name']);
+    		$ext=array_values(array_slice(explode(".",$name), -1))[0];
+    		$name=$url . "-" . $cat_id . "." . $ext;
+    		$tmp_name = $_FILES['pltImg']['tmp_name'];
+    		$destPath=$destFolder . "/" . $name;
+    		move_uploaded_file($tmp_name, $destPath);
+    		$idImg=$destPath;
         }
         return $idImg;
     }
 
-
-
     function htmlChars($str){
-	$str=str_replace("&","&amp;",$str);
-	$str=str_replace("'","&#39;",$str);
-	$charEq = array('Á','á','À','Â','à','Â','â','Ä','ä','Ã','ã','Å','å','Æ','æ','Ç','ç','Ð','ð','É','é','È','è','Ê','ê','Ë','ë','Í','í','Ì','ì','Î','î','Ï','ï','Ñ','ñ','Ó','ó','Ò','ò','Ô','ô','Ö','ö','Õ','õ','Ø','ø','ß','Þ','þ','Ú','ú','Ù','ù','Û','û','Ü','ü','Ý','ý','ÿ');
+    	$str=str_replace("&","&amp;",$str);
+    	$str=str_replace("'","&#39;",$str);
+    	$charEq = array('Á','á','À','Â','à','Â','â','Ä','ä','Ã','ã','Å','å','Æ','æ','Ç','ç','Ð','ð','É','é','È','è','Ê','ê','Ë','ë','Í','í','Ì','ì','Î','î','Ï','ï','Ñ','ñ','Ó','ó','Ò','ò','Ô','ô','Ö','ö','Õ','õ','Ø','ø','ß','Þ','þ','Ú','ú','Ù','ù','Û','û','Ü','ü','Ý','ý','ÿ');
         $htmlChars = array('&Aacute;','&aacute;','&Agrave;','&Acirc;','&agrave;','&Acirc;','&acirc;','&Auml;','&auml;','&Atilde;','&atilde;','&Aring;','&aring;','&Aelig;','&aelig;','&Ccedil;','&ccedil;','&Eth;','&eth;','&Eacute;','&eacute;','&Egrave;','&egrave;','&Ecirc;','&ecirc;','&Euml;','&euml;','&Iacute;','&iacute;','&Igrave;','&igrave;','&Icirc;','&icirc;','&Iuml;','&iuml;','&Ntilde;','&ntilde;','&Oacute;','&oacute;','&Ograve;','&ograve;','&Ocirc;','&ocirc;','&Ouml;','&ouml;','&Otilde;','&otilde;','&Oslash;','&oslash;','&szlig;','&Thorn;','&thorn;','&Uacute;','&uacute;','&Ugrave;','&ugrave;','&Ucirc;','&ucirc;','&Uuml;','&uuml;','&Yacute;','&yacute;','&yuml;');
-	return str_replace($charEq, $htmlChars, $str);
+	    return str_replace($charEq, $htmlChars, $str);
     }	
 
     function generateUrl($str) {
-	$str=strtolower($str);
+	    $str=strtolower($str);
         $str=str_replace("'","-",$str);
         $str=str_replace(" ","-",$str); 
-	$str=str_replace("&","-",$str);
+	    $str=str_replace("&","-",$str);
         $str=str_replace("---","-",$str);  
         $str=str_replace("--","-",$str);  
     
@@ -372,13 +369,19 @@
         return str_replace($a, $b, $str);
     }
     
-    
     /***** FUNCTIONS for INDEX ****/
-    function getCategoryLang($dbh,$lang,$filtered){
-	$query = "SELECT c.id as cat_id,c.url as url, ct.translation as translation from category c, cat_trans ct where c.id = ct.cat_id AND ct.lang_id = (select id from language where langShort = :lang)";
-	if($filtered){
-		$query .= " AND c.id in (select cat_id from product)";
-	}
+    function getCategoryLang($dbh,$lang,$filtered,$start = null,$limit = null){
+	    $query = "SELECT c.id as cat_id,c.url as url, ct.translation as translation from category c, cat_trans ct where c.id = ct.cat_id AND ct.lang_id = (select id from language where langShort = :lang)";
+    	if($filtered){
+    		$query .= " AND c.id in (select cat_id from product)";
+    	}
+        if(isset($start)){
+            if (isset($limit)){
+                $query .= " LIMIT " . $start .",". $limit ;
+            } else {
+                $query .= " LIMIT " . $start .",12" ;
+            }
+        }
         $stmt=$dbh->prepare($query);
         $stmt->bindValue(":lang",$lang);
         $result=$stmt->execute();
@@ -391,5 +394,18 @@
             $categories[$newCat->id]=$newCat;
         }
         return $categories;
+    }
+
+    function getUsedCategoryCnt($dbh,$lang,$filtered = 0) {
+        $query = "SELECT count(*) as cnt from category c, cat_trans ct where c.id = ct.cat_id AND ct.lang_id = (select id from language where langShort = :lang)";
+        if($filtered){
+            $query .= " AND c.id in (select cat_id from product)";
+        }
+        //echo $query;
+        $stmt=$dbh->prepare($query);
+        $stmt->bindValue(":lang",$lang);
+        $stmt->execute();
+        $cnt = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $cnt['cnt'];
     }
 ?>
