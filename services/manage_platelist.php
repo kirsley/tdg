@@ -18,9 +18,9 @@
         if ($cat_id > 0){
 
             $products=getProductsByCategory($mainSrvDbh,$cat_id,$lang,$start,$limit);
-            $cnt=count($products);
+            $cnt=count($products); //$cnt --> Total productos en query actual
     //        echo $cnt;
-            $prodCnt=countProd($mainSrvDbh,$cat_id);
+            $prodCnt=countProd($mainSrvDbh,$cat_id); // $prodCnt --> Total Productos a listar
 
             if (($start + $limit) < $prodCnt){
                     $newStart = $start + $limit;
@@ -39,22 +39,34 @@
             $result .= "<div id='" . $divId ."' >";
             $result .= "<table>";
             $result .= "<tr>";
-            $cont=0;
-            for($i = 0; $i < $cnt; $i++){
-                $prod=$products[$i];
-                $result .= "<td class='platotd' ><a href='".$prod->cat_url . "/" . $prod->url ."'><img class='platoimg' src='" . $prod->img_path ."' /> </a></td>";
-                $cont++;
-                if ($cont % $mxCol ==0){
-                    $result .= "</tr>";
-                    $result .= "<tr>";
-                    for ($a = $i - ($mxCol - 1); $a <= $i; $a++){
-                        $result .= "<th align='justify'>" . $products[$a]->translation . "</th>";
-                    }
-                    $result .= "</tr>";
-                    $result .= "<tr>";
-                    $cont = 0;
-    		    }
-            }
+	    $cont=0;
+	    if ( $cnt == 1 ) {
+		    $prod=$products[0];
+		     $result .= "<td class='platotd' ><a href='".$prod->cat_url . "/" . $prod->url ."'><img class='platoimg' src='" . $prod->img_path ."' /> </a></td>";
+		    $result.= "</tr><tr>";
+		    $result .= "<th align='justify'>" . $products[0]->translation . "</th>";
+		    
+	    } else {
+	            for($i = 0; $i < $cnt; $i++){
+	                $prod=$products[$i];
+	                $result .= "<td class='platotd' ><a href='".$prod->cat_url . "/" . $prod->url ."'><img class='platoimg' src='" . $prod->img_path ."' /> </a></td>";
+	                $cont++;
+	                if ($cont % $mxCol ==0 || ($cnt == 5 && $cont == $cnt)){
+	                    $result .= "</tr>";
+			    $result .= "<tr>";
+			    if ($cnt == 5 && $cont == $cnt){
+				    $astart=$i - 1;
+			    } else {
+				    $astart=$i - ($mxCol - 1);
+			    }
+	                    for ($a = $astart; $a <= $i; $a++){
+	                        $result .= "<th align='justify'>" . $products[$a]->translation . "</th>";
+	                    }
+	                    $result .= "</tr>";
+	                    $result .= "<tr>";
+	    		    }
+		    }
+	    }
             $result .= "</tr>";
             if($newEnd >= 0 || $newStart <> $start ){
                 $result .= "<tr><td>";
